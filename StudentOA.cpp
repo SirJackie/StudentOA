@@ -1,4 +1,4 @@
-#define _CRT_SECURE_NO_WARNINGS
+﻿#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
 #include <process.h>
@@ -20,7 +20,7 @@
 ** Global Variables
 */
 
-struct Student{
+struct Student {
 	int id;
 	char name[10];
 	char pwd[100];
@@ -35,10 +35,10 @@ int length = 0;
 ** Save & Load Functions
 */
 
-void Save(Student* students, int length){
+void Save(Student* students, int length) {
 	// Initialize
 	FILE* fp = fopen("database.bin", "wb");
-	if (fp == NULL){
+	if (fp == NULL) {
 		perror("Error Opening File");
 		system("pause");
 	}
@@ -50,10 +50,10 @@ void Save(Student* students, int length){
 	fclose(fp);
 }
 
-int Load(Student* buffer){
+int Load(Student* buffer) {
 	// Initialize
 	FILE* fp = fopen("database.bin", "rb");
-	if (fp == NULL){
+	if (fp == NULL) {
 		perror("Error Opening File");
 		system("pause");
 	}
@@ -63,9 +63,9 @@ int Load(Student* buffer){
 	Student* ptr = buffer;
 
 	// Read from File
-	while (true){
+	while (true) {
 		fread(ptr, sizeof(Student), 1, fp);
-		if (feof(fp)){
+		if (feof(fp)) {
 			break;
 		}
 		currLength++;
@@ -82,22 +82,22 @@ int Load(Student* buffer){
 ** Search Algorithm
 */
 
-bool isArbitaryStrEqual(char* str1, char* str2, int length){
-	for (int i = 0; i < length; i++){
-		if (str1[i] != str2[i]){
+bool isArbitaryStrEqual(char* str1, char* str2, int length) {
+	for (int i = 0; i < length; i++) {
+		if (str1[i] != str2[i]) {
 			return false;
 		}
 	}
 	return true;
 }
 
-bool vagueFind(char* str, char* subStr){
+bool vagueFind(char* str, char* subStr) {
 	int sLen = strlen(str);      // For instance 5
 	int ssLen = strlen(subStr);  // For instance 3
 
-	for (int starter = 0; starter < sLen - ssLen + 1; starter++){  // 0 1 2
+	for (int starter = 0; starter < sLen - ssLen + 1; starter++) {  // 0 1 2
 		char* ptrStarter = str + starter;
-		if (isArbitaryStrEqual(ptrStarter, subStr, ssLen) == true){
+		if (isArbitaryStrEqual(ptrStarter, subStr, ssLen) == true) {
 			return true;
 		}
 	}
@@ -105,8 +105,8 @@ bool vagueFind(char* str, char* subStr){
 	return false;
 }
 
-void Display(){
-	for (int i = 0; i < length; i++){
+void Display() {
+	for (int i = 0; i < length; i++) {
 		printf(
 			"%d\t%s\t%s\t%d\n",
 			students[i].id,
@@ -119,14 +119,14 @@ void Display(){
 	printf("--------------------------------\n");
 }
 
-void Search(){
+void Search() {
 	printf("Please Enter Student's Name, Vague Find Supported: ");
 	char buffer[1000];
 	scanf("%s", buffer);
 	getchar();  // Flush Stdin
 
-	for (int i = 0; i < length; i++){
-		if (vagueFind(students[i].name, buffer)){
+	for (int i = 0; i < length; i++) {
+		if (vagueFind(students[i].name, buffer)) {
 			printf(
 				"%d\t%s\t%s\t%d\n",
 				students[i].id,
@@ -140,7 +140,7 @@ void Search(){
 	printf("--------------------------------\n");
 }
 
-void Append(){
+void Append() {
 	printf("Please Enter the Student's Information that You Wanna Append.\n");
 	printf("Format: name password year\n");
 	scanf(
@@ -169,7 +169,7 @@ void Append(){
 	printf("--------------------------------\n");
 }
 
-void Reset(){
+void Reset() {
 	printf("Please Enter the Reset Information.\n");
 	printf("Format: id old_password new_password\n");
 
@@ -186,19 +186,19 @@ void Reset(){
 
 	bool successFlag = false;
 
-	for (int i = 0; i < length; i++){
-		if (students[i].id == id && STR_EQUAL(students[i].pwd, oldPwd)){
+	for (int i = 0; i < length; i++) {
+		if (students[i].id == id && STR_EQUAL(students[i].pwd, oldPwd)) {
 			strcpy(students[i].pwd, newPwd);
 			successFlag = true;
 		}
 	}
 
-	if (successFlag == true){
+	if (successFlag == true) {
 		printf("Reset Operation Succeed.\n");
 		Save(students, length);
 		printf("Data Saved to the Database.\n");
 	}
-	else{
+	else {
 		printf("Reset Operation Failed.\n");
 	}
 
@@ -207,7 +207,7 @@ void Reset(){
 }
 
 #ifdef MODE_CREATOR
-int main(){
+int main() {
 	Student students[5] = {
 		{1001, "Jackie", "dmbasfk", 2005},
 		{1002, "Sarah", "lululemon", 2006},
@@ -223,7 +223,7 @@ int main(){
 #endif
 
 #ifdef MODE_MAIN_OA
-int main(){
+int main() {
 	printf("---------- Student OA ----------\n");
 	printf("Enter Your Option, d for Display, s for Search, a for Append, r for Reset, x for Exit.\n");
 	length = Load(students);
@@ -231,7 +231,7 @@ int main(){
 	char option;
 	bool wannaExit = false;
 
-	while (true){
+	while (true) {
 		printf("Option: ");
 		option = getchar();
 
@@ -258,7 +258,7 @@ int main(){
 			getchar();  // Flush Stdin
 		}
 
-		if (wannaExit){
+		if (wannaExit) {
 			break;
 		}
 	}
@@ -266,4 +266,3 @@ int main(){
 	return 0;
 }
 #endif
-
