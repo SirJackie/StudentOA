@@ -4,6 +4,13 @@
 #include <process.h>
 
 /*
+** Mode Selection
+*/
+
+// #define MODE_CREATOR
+#define MODE_MAIN_OA
+
+/*
 ** Shortcut
 */
 
@@ -142,7 +149,7 @@ void Append(){
 		students[length].pwd,
 		&students[length].year
 	);
-	
+
 	// ID Self Increment
 	students[length].id = students[length - 1].id + 1;
 
@@ -165,27 +172,27 @@ void Append(){
 void Reset(){
 	printf("Please Enter the Reset Information.\n");
 	printf("Format: id old_password new_password\n");
-	
+
 	int id;
 	char oldPwd[1000];
 	char newPwd[1000];
-	
+
 	scanf(
 		"%d %s %s",
 		&id,
 		oldPwd,
 		newPwd
 	);
-	
+
 	bool successFlag = false;
-	
+
 	for (int i = 0; i < length; i++){
 		if (students[i].id == id && STR_EQUAL(students[i].pwd, oldPwd)){
 			strcpy(students[i].pwd, newPwd);
 			successFlag = true;
 		}
 	}
-	
+
 	if (successFlag == true){
 		printf("Reset Operation Succeed.\n");
 		Save(students, length);
@@ -194,11 +201,28 @@ void Reset(){
 	else{
 		printf("Reset Operation Failed.\n");
 	}
-	
+
 	getchar();  // Flush Stdin
 	printf("--------------------------------\n");
 }
 
+#ifdef MODE_CREATOR
+int main(){
+	Student students[5] = {
+		{1001, "Jackie", "dmbasfk", 2005},
+		{1002, "Sarah", "lululemon", 2006},
+		{1003, "Paul", "rockstarOG", 2005},
+		{1004, "Vangel", "immaGreek", 1979},
+		{1005, "Carl", "losantoYeah", 1985}
+	};
+	
+	int length = 5;
+	
+	Save(students, length);
+}
+#endif
+
+#ifdef MODE_MAIN_OA
 int main(){
 	printf("---------- Student OA ----------\n");
 	printf("Enter Your Option, d for Display, s for Search, a for Append, r for Reset, x for Exit.\n");
@@ -241,4 +265,5 @@ int main(){
 
 	return 0;
 }
+#endif
 
