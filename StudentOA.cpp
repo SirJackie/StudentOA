@@ -215,9 +215,9 @@ int main(){
 		{1004, "Vangel", "immaGreek", 1979},
 		{1005, "Carl", "losantoYeah", 1985}
 	};
-	
+
 	int length = 5;
-	
+
 	Save(students, length);
 }
 #endif
