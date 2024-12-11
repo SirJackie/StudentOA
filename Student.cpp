@@ -18,6 +18,13 @@ int length = 0;
  * Save & Load Functions
  */
 
+/**
+ * @brief: Save students data into a file.
+ * @param students: Pointer to an array of student structs to be saved.
+ * @param length: How many student structs you want to save.
+ * @return: void
+ */
+
 void Save(Student* students, int length) {
 	// Initialize
 	FILE* fp = fopen("database.bin", "wb");
@@ -32,6 +39,12 @@ void Save(Student* students, int length) {
 	// Finalize
 	fclose(fp);
 }
+
+/**
+ * @brief: Load students data from a file.
+ * @param buffer: Pointer to an buffer where loaded contents will be stored here.
+ * @return int: How many student structures are loaded from the file.
+ */
 
 int Load(Student* buffer) {
 	// Initialize
@@ -66,6 +79,14 @@ int Load(Student* buffer) {
  * Search Algorithm
  */
 
+/**
+ * @brief: Compare if the first nth chars in two strings are equal or not.
+ * @param str1: first string being compared.
+ * @param str2: second string being compared.
+ * @param length: How many chars do you wanna compare? (first nth)
+ * @return bool: If they are equal, true or false.
+ */
+
 bool isArbitaryStrEqual(char* str1, char* str2, int length) {
 	for (int i = 0; i < length; i++) {
 		if (str1[i] != str2[i]) {
@@ -74,6 +95,13 @@ bool isArbitaryStrEqual(char* str1, char* str2, int length) {
 	}
 	return true;
 }
+
+/**
+ * @brief: Determine if a string includes a sub-string or not.
+ * @param str: the parent string.
+ * @param subStr: the child sub-string.
+ * @return bool: If the parent string includes the child sub-string.
+ */
 
 bool vagueFind(char* str, char* subStr) {
 	int sLen = strlen(str);      // For instance 5
@@ -94,6 +122,11 @@ bool vagueFind(char* str, char* subStr) {
  * Business Logics
  */
 
+/**
+ * @brief: Display all the student information.
+ * @return void
+ */
+
 void Display() {
 	for (int i = 0; i < length; i++) {
 		printf(
@@ -107,6 +140,11 @@ void Display() {
 	getchar();  // Flush Stdin
 	printf("--------------------------------\n");
 }
+
+/**
+ * @brief: Search if a given name is inside the Student Structure Array.
+ * @return void
+ */
 
 void Search() {
 	printf("Please Enter Student's Name, Vague Find Supported: ");
@@ -128,6 +166,11 @@ void Search() {
 
 	printf("--------------------------------\n");
 }
+
+/**
+ * @brief: Append a student into the Student Structure Array.
+ * @return void
+ */
 
 void Append() {
 	printf("Please Enter the Student's Information that You Wanna Append.\n");
@@ -157,6 +200,11 @@ void Append() {
 	getchar();  // Flush Stdin
 	printf("--------------------------------\n");
 }
+
+/**
+ * @brief: Reset a student's password.
+ * @return void
+ */
 
 void Reset() {
 	printf("Please Enter the Reset Information.\n");
