@@ -8,8 +8,8 @@
 
 struct Student {
 	int id;
-	char name[10];
-	char pwd[100];
+	char name[16];
+	char pwd[32];
 	int year;
 };
 
@@ -26,8 +26,8 @@ struct Student {
  */
 
 #define STUDENT_MAX_LEN 1000
-extern Student students[];
-extern int length;
+extern Student G_students[];
+extern int G_length;
 
 /**
  * @section

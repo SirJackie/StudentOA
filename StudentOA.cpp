@@ -18,7 +18,7 @@
 #ifdef MODE_CREATOR
 int main() {
 	Student students[5] = {
-		{1001, "Jackie", "dmbasfk", 2005},
+		{1001, "Jackie", "dumbasfuk", 2005},
 		{1002, "Sarah", "lululemon", 2006},
 		{1003, "Paul", "rockstarOG", 2005},
 		{1004, "Vangel", "immaGreek", 1979},
@@ -35,7 +35,7 @@ int main() {
 int main() {
 	printf("---------- Student OA ----------\n");
 	printf("Enter Your Option, d for Display, s for Search, a for Append, r for Reset, x for Exit.\n");
-	length = Load(students);
+	G_length = Load(G_students);
 
 	char option;
 	bool wannaExit = false;

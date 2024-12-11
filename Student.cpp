@@ -10,8 +10,8 @@
  * Global Variables
  */
 
-Student students[STUDENT_MAX_LEN];
-int length = 0;
+Student G_students[STUDENT_MAX_LEN];
+int G_length = 0;
 
 /**
  * @section
@@ -128,13 +128,13 @@ bool vagueFind(char* str, char* subStr) {
  */
 
 void Display() {
-	for (int i = 0; i < length; i++) {
+	for (int i = 0; i < G_length; i++) {
 		printf(
 			"%d\t%s\t%s\t%d\n",
-			students[i].id,
-			students[i].name,
-			students[i].pwd,
-			students[i].year
+			G_students[i].id,
+			G_students[i].name,
+			G_students[i].pwd,
+			G_students[i].year
 		);
 	}
 	getchar();  // Flush Stdin
@@ -148,18 +148,18 @@ void Display() {
 
 void Search() {
 	printf("Please Enter Student's Name, Vague Find Supported: ");
-	char buffer[1000];
+	char buffer[16];
 	scanf("%s", buffer);
 	getchar();  // Flush Stdin
 
-	for (int i = 0; i < length; i++) {
-		if (vagueFind(students[i].name, buffer)) {
+	for (int i = 0; i < G_length; i++) {
+		if (vagueFind(G_students[i].name, buffer)) {
 			printf(
 				"%d\t%s\t%s\t%d\n",
-				students[i].id,
-				students[i].name,
-				students[i].pwd,
-				students[i].year
+				G_students[i].id,
+				G_students[i].name,
+				G_students[i].pwd,
+				G_students[i].year
 			);
 		}
 	}
@@ -177,24 +177,24 @@ void Append() {
 	printf("Format: name password year\n");
 	scanf(
 		"%s %s %d",
-		students[length].name,
-		students[length].pwd,
-		&students[length].year
+		G_students[G_length].name,
+		G_students[G_length].pwd,
+		&G_students[G_length].year
 	);
 
 	// ID Self Increment
-	students[length].id = students[length - 1].id + 1;
+	G_students[G_length].id = G_students[G_length - 1].id + 1;
 
 	printf(
 		"New Student Appended:\n%d\t%s\t%s\t%d\n",
-		students[length].id,
-		students[length].name,
-		students[length].pwd,
-		students[length].year
+		G_students[G_length].id,
+		G_students[G_length].name,
+		G_students[G_length].pwd,
+		G_students[G_length].year
 	);
-	length++;   // Step in
+	G_length++;   // Step in
 
-	Save(students, length);
+	Save(G_students, G_length);
 	printf("Data Saved to the Database.\n");
 
 	getchar();  // Flush Stdin
@@ -211,8 +211,8 @@ void Reset() {
 	printf("Format: id old_password new_password\n");
 
 	int id;
-	char oldPwd[1000];
-	char newPwd[1000];
+	char oldPwd[32];
+	char newPwd[32];
 
 	scanf(
 		"%d %s %s",
@@ -223,16 +223,16 @@ void Reset() {
 
 	bool successFlag = false;
 
-	for (int i = 0; i < length; i++) {
-		if (students[i].id == id && STR_EQUAL(students[i].pwd, oldPwd)) {
-			strcpy(students[i].pwd, newPwd);
+	for (int i = 0; i < G_length; i++) {
+		if (G_students[i].id == id && STR_EQUAL(G_students[i].pwd, oldPwd)) {
+			strcpy(G_students[i].pwd, newPwd);
 			successFlag = true;
 		}
 	}
 
 	if (successFlag == true) {
 		printf("Reset Operation Succeed.\n");
-		Save(students, length);
+		Save(G_students, G_length);
 		printf("Data Saved to the Database.\n");
 	}
 	else {
