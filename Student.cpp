@@ -148,7 +148,7 @@ void Display() {
 
 void Search() {
 	printf("Please Enter Student's Name, Vague Find Supported (<= 15 Chars): ");
-	char buffer[16];
+	char buffer[16] = { 0 };
 	SafeInput(buffer, 15);
 	getchar();  // Flush Stdin
 
@@ -212,8 +212,8 @@ void Reset() {
 	printf("Please Enter the Reset Information.\n");
 
 	int id;
-	char oldPwd[32];
-	char newPwd[32];
+	char oldPwd[32] = { 0 };
+	char newPwd[32] = { 0 };
 
 	printf("ID: ");
 	scanf("%d", &id);
