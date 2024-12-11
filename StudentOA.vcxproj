@@ -151,10 +151,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SafeInput.cpp" />
     <ClCompile Include="Student.cpp" />
     <ClCompile Include="StudentOA.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SafeInput.h" />
     <ClInclude Include="Student.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
