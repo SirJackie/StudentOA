@@ -1,9 +1,9 @@
-#include "Student.h"
-
 #define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
 #include <process.h>
+#include "Student.h"
+#include "SafeInput.h"
 
 /**
  * @section
@@ -147,9 +147,9 @@ void Display() {
  */
 
 void Search() {
-	printf("Please Enter Student's Name, Vague Find Supported: ");
+	printf("Please Enter Student's Name, Vague Find Supported (<= 15 Chars): ");
 	char buffer[16];
-	scanf("%s", buffer);
+	SafeInput(buffer, 15);
 	getchar();  // Flush Stdin
 
 	for (int i = 0; i < G_length; i++) {
@@ -174,13 +174,15 @@ void Search() {
 
 void Append() {
 	printf("Please Enter the Student's Information that You Wanna Append.\n");
-	printf("Format: name password year\n");
-	scanf(
-		"%s %s %d",
-		G_students[G_length].name,
-		G_students[G_length].pwd,
-		&G_students[G_length].year
-	);
+
+	printf("Name (<= 15 Chars): ");
+	SafeInput(G_students[G_length].name, 15);
+
+	printf("Password (<= 31 Chars): ");
+	SafeInput(G_students[G_length].pwd, 31);
+
+	printf("Year: ");
+	scanf("%d", &G_students[G_length].year);
 
 	// ID Self Increment
 	G_students[G_length].id = G_students[G_length - 1].id + 1;
@@ -208,18 +210,19 @@ void Append() {
 
 void Reset() {
 	printf("Please Enter the Reset Information.\n");
-	printf("Format: id old_password new_password\n");
 
 	int id;
 	char oldPwd[32];
 	char newPwd[32];
 
-	scanf(
-		"%d %s %s",
-		&id,
-		oldPwd,
-		newPwd
-	);
+	printf("ID: ");
+	scanf("%d", &id);
+
+	printf("Old Password (<= 31 Chars): ");
+	SafeInput(oldPwd, 31);
+
+	printf("New Password (<= 31 Chars): ");
+	SafeInput(newPwd, 31);
 
 	bool successFlag = false;
 
