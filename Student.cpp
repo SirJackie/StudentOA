@@ -27,14 +27,22 @@ int G_length = 0;
 
 void Save(Student* students, int length) {
 	// Initialize
-	FILE* fp = fopen("database.bin", "wb");
+	FILE* fp = fopen("database.txt", "w");
 	if (fp == NULL) {
 		perror("Error Opening File");
 		system("pause");
 	}
 
 	// Save to File
-	fwrite(students, sizeof(Student), length, fp);
+	for (int i = 0; i < length; i++) {
+		fprintf(
+			fp, "%d %s %s %d\n",
+			students[i].id,
+			students[i].name,
+			students[i].pwd,
+			students[i].year
+		);
+	}
 
 	// Finalize
 	fclose(fp);
@@ -48,7 +56,7 @@ void Save(Student* students, int length) {
 
 int Load(Student* buffer) {
 	// Initialize
-	FILE* fp = fopen("database.bin", "rb");
+	FILE* fp = fopen("database.txt", "r");
 	if (fp == NULL) {
 		perror("Error Opening File");
 		system("pause");
@@ -60,7 +68,14 @@ int Load(Student* buffer) {
 
 	// Read from File
 	while (true) {
-		fread(ptr, sizeof(Student), 1, fp);
+		fscanf(
+			fp, "%d %s %s %d",
+			&ptr->id,
+			ptr->name,
+			ptr->pwd,
+			&ptr->year
+		);
+
 		if (feof(fp)) {
 			break;
 		}
