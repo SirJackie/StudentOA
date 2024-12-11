@@ -87,7 +87,7 @@ int Load(Student* buffer) {
  * @return bool: If they are equal, true or false.
  */
 
-bool isArbitaryStrEqual(char* str1, char* str2, int length) {
+bool isArbitaryStrEqual(const char* str1, const char* str2, int length) {
 	for (int i = 0; i < length; i++) {
 		if (str1[i] != str2[i]) {
 			return false;
@@ -103,12 +103,12 @@ bool isArbitaryStrEqual(char* str1, char* str2, int length) {
  * @return bool: If the parent string includes the child sub-string.
  */
 
-bool vagueFind(char* str, char* subStr) {
+bool vagueFind(const char* str, const char* subStr) {
 	int sLen = strlen(str);      // For instance 5
 	int ssLen = strlen(subStr);  // For instance 3
 
 	for (int starter = 0; starter < sLen - ssLen + 1; starter++) {  // 0 1 2
-		char* ptrStarter = str + starter;
+		const char* ptrStarter = str + starter;
 		if (isArbitaryStrEqual(ptrStarter, subStr, ssLen) == true) {
 			return true;
 		}

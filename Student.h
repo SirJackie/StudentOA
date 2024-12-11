@@ -42,8 +42,8 @@ int  Load(Student* buffer);
  * Search Algorithm
  */
 
-bool isArbitaryStrEqual(char* str1, char* str2, int length);
-bool vagueFind(char* str, char* subStr);
+bool isArbitaryStrEqual(const char* str1, const char* str2, int length);
+bool vagueFind(const char* str, const char* subStr);
 
 /**
  * @section
