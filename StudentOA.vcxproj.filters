@@ -24,12 +24,18 @@
     <ClCompile Include="SafeInput.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Student.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="SafeInput.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

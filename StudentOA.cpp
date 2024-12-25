@@ -1,6 +1,9 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include "Student.h"
+#include "UI.h"
+#include <string.h>
+#include <process.h>
 
 /**
  * @section
@@ -31,31 +34,88 @@ int main() {
 }
 #endif
 
+#define CONSOLE_WIDTH  80
+#define CONSOLE_HEIGHT 25
+#define X_AXIS_PADDING 12
+#define Y_BUTTON_HEIGHT 3
+
+void DrawWindow() {
+	DrawRect(0, 0, 80, 25);
+}
+
+void DrawButton(int y, const char* content, bool isBordered, bool isTextCentered) {
+	int startX = X_AXIS_PADDING;
+	int startY = y;
+	int endX = CONSOLE_WIDTH - X_AXIS_PADDING - 2;
+	int endY = y + Y_BUTTON_HEIGHT;
+
+	if (isBordered) {
+		DrawRect(startX, startY, endX, endY);
+	}
+	
+	GotoXY(startX + 1, startY + 1);
+	if (isTextCentered) {
+		int buttonWidth = endX - startX;
+		int spaces = (buttonWidth - strlen(content)) / 2 - 1;
+		for (int i = 0; i < spaces; i++) {
+			printf(" ");
+		}
+	}
+	printf("%s", content);
+}
+
+void DrawStarterPage() {
+	DrawWindow();
+	int yNow = 1;
+	DrawButton(yNow, "---------- Student OA ----------", false, true);
+	yNow += Y_BUTTON_HEIGHT;
+	DrawButton(yNow, "Enter Your Option, e.g. 'd', Then Press Enter.", false, true);
+	yNow += Y_BUTTON_HEIGHT;
+	DrawButton(yNow, "d. Display", true, false);
+	yNow += Y_BUTTON_HEIGHT;
+	DrawButton(yNow, "s. Search", true, false);
+	yNow += Y_BUTTON_HEIGHT;
+	DrawButton(yNow, "a. Append", true, false);
+	yNow += Y_BUTTON_HEIGHT;
+	DrawButton(yNow, "r. Reset", true, false);
+	yNow += Y_BUTTON_HEIGHT;
+	DrawButton(yNow, "x. Exit", true, false);
+	yNow += Y_BUTTON_HEIGHT;
+
+	GotoXY(0, 25);
+	printf("Please Enter Your Option: ");
+}
+
 #ifdef MODE_MAIN_OA
 int main() {
-	printf("---------- Student OA ----------\n");
-	printf("Enter Your Option, d for Display, s for Search, a for Append, r for Reset, x for Exit.\n");
+	
 	G_length = Load(G_students);
 
 	char option;
 	bool wannaExit = false;
 
 	while (true) {
-		printf("Option: ");
+		system("cls");
+		DrawStarterPage();
 		option = getchar();
+		system("cls");
 
 		switch (option) {
 		case 'd':
 			Display();
+			getchar();
 			break;
 		case 's':
 			Search();
+			getchar();
 			break;
 		case 'a':
 			Append();
+			getchar();
 			break;
 		case 'r':
 			Reset();
+			getchar();
 			break;
 		case 'x':
 			printf("Exiting...\n");
@@ -65,6 +125,7 @@ int main() {
 			printf("Option NOT FOUND!\n");
 			printf("--------------------------------\n");
 			getchar();  // Flush Stdin
+			getchar();
 		}
 
 		if (wannaExit) {

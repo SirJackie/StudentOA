@@ -154,10 +154,12 @@
     <ClCompile Include="SafeInput.cpp" />
     <ClCompile Include="Student.cpp" />
     <ClCompile Include="StudentOA.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SafeInput.h" />
     <ClInclude Include="Student.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
