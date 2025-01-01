@@ -1,6 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "UI.h"
 #include <math.h>
+#include <time.h>
 #include <stdio.h>
 #include <conio.h>
 #include <Windows.h>
@@ -369,4 +370,111 @@ void UI_MessageBox(const char* message) {
 
     UI_Render(divList, sizeof(divList) / sizeof(Div));
     getchar();  // Wait for Exit.
+}
+
+float tick = 0.0f;
+float speed = 0.15f;
+
+void UI_DrawRect_Inputting_Animated(
+    int x0, int y0, int width, int height, bool drawX, bool drawY
+) {
+
+    int x1 = x0 + width - 1;
+    int y1 = y0 + height - 1;
+
+    if (drawX) {
+        // Left
+        for (int i = y0; i <= y1; i++) {
+            if ((i + int(tick)) % 5 == 0) {
+                UI_GotoXY(x0, i);
+                printf("%c", ' ');
+                continue;
+            }
+            UI_GotoXY(x0, i);
+            printf("%c", 186);
+        }
+        // Right
+        for (int i = y0; i <= y1; i++) {
+            if ((i - int(tick)) % 5 == 0) {
+                UI_GotoXY(x1, i);
+                printf("%c", ' ');
+                continue;
+            }
+            UI_GotoXY(x1, i);
+            printf("%c", 186);
+        }
+    }
+
+    if (drawY) {
+        // Up
+        for (int i = x0; i <= x1; i++) {
+            if ((i - int(tick)) % 5 == 0) {
+                UI_GotoXY(i, y0);
+                printf("%c", ' ');
+                continue;
+            }
+            UI_GotoXY(i, y0);
+            printf("%c", 205);
+        }
+        // Down
+        for (int i = x0; i <= x1; i++) {
+            if ((i + int(tick)) % 5 == 0) {
+                UI_GotoXY(i, y1);
+                printf("%c", ' ');
+                continue;
+            }
+            UI_GotoXY(i, y1);
+            printf("%c", 205);
+        }
+    }
+
+    if (drawX && drawY) {
+        // Top-Left Corner
+        UI_GotoXY(x0, y0);
+        printf("%c", 201);
+        // Top-Right Corner
+        UI_GotoXY(x1, y0);
+        printf("%c", 187);
+        // Bottom-Left Corner
+        UI_GotoXY(x0, y1);
+        printf("%c", 200);
+        // Bottom-Right Corner
+        UI_GotoXY(x1, y1);
+        printf("%c", 188);
+    }
+}
+
+void UI_InputAnimation(Div div) {
+    while (true) {
+        int borderX = div.x + div.marginX;
+        int borderY = div.y + div.marginY;
+        int borderWidth = div.width - 2 * div.marginX;
+        int borderHeight = div.height - 2 * div.marginY;
+
+        if (div.borderX || div.borderY) {
+            UI_DrawRect_Inputting_Animated(
+                borderX, borderY, borderWidth, borderHeight, div.borderX, div.borderY
+            );
+        }
+
+        int textX = borderX + 1 + div.paddingX;
+        int textY = borderY + 1 + div.paddingY;
+        int textWidth = borderWidth - 2 * (1 + div.paddingX);    // 1 for BorderWidth
+        int textHeight = borderHeight - 2 * (1 + div.paddingY);  // 1 for BorderHeight
+
+        if (div.width == 1) {
+            textX = borderX;
+        }
+
+        if (div.height == 1) {
+            textY = borderY;
+        }
+
+        UI_PrintfWordWrap(
+            textX, textY, textWidth, textHeight, div.text, div.text_centered
+        );
+
+        Sleep(3);
+        tick += speed;
+    }
 }

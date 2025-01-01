@@ -274,12 +274,46 @@ void Display() {
  */
 
 void Search() {
-	printf("Please Enter Student's Name, Vague Find Supported (<= 15 Chars): ");
-	char buffer[16] = { 0 };
-	SafeInput(buffer, 15);
-	getchar();  // Flush Stdin
 
-	for (int i = 0; i < G_length; i++) {
+	Div divList[] = {
+		{   // Window Border
+			0, 0, WIN_WIDTH, WIN_HEIGHT,
+			true, true, 0, 0, 0, 0,
+			"", false
+		},
+		{
+			1, 2, 78, 3,
+			false, true, 3, 0, 0, 0,
+			"Search", true
+		},
+		{
+			1, 6, 78, 5,
+			true, true, 3, 0, 1, 1,
+			"Student's Name: ", false
+		}
+	};
+
+	UI_Render(divList, sizeof(divList) / sizeof(Div));
+	//getchar();
+
+	UI_InputAnimation(divList[2]);
+
+
+
+
+
+
+
+
+
+
+
+	//printf("Please Enter Student's Name, Vague Find Supported (<= 15 Chars): ");
+	//char buffer[16] = { 0 };
+	//SafeInput(buffer, 15);
+	//getchar();  // Flush Stdin
+
+	/*for (int i = 0; i < G_length; i++) {
 		if (vagueFind(G_students[i].name, buffer)) {
 			printf(
 				"%d\t%s\t%s\t%d\n",
@@ -291,7 +325,7 @@ void Search() {
 		}
 	}
 
-	printf("--------------------------------\n");
+	printf("--------------------------------\n");*/
 }
 
 /**

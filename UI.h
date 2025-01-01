@@ -67,4 +67,9 @@ void UI_DrawDivList_Animated(Div* divList, int length, float completeness);
 void UI_Render(Div* divList, int length);
 void UI_MessageBox(const char* message);
 
+void UI_DrawRect_Inputting_Animated(
+	int x0, int y0, int width, int height, bool drawX, bool drawY
+);
+void UI_InputAnimation(Div div);
+
 #endif
