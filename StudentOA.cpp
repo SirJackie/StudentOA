@@ -4,6 +4,7 @@
 #include "UI.h"
 #include <string.h>
 #include <process.h>
+#include <Windows.h>
 
 /**
  * @section
@@ -115,14 +116,21 @@ void UI_DrawStarterPage() {
 
 int main() {
 	UI_Init();
-	UI_DrawWindow();
+	UI_DrawRect(0, 0, WIN_WIDTH, WIN_HEIGHT, true, true);
 
 	Div div = {
 		1, 1, 78, 23,
-		false, true, 5, 5, 3, 3,
-		"A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. "
+		true, true, 5, 5, 3, 3,
+		"A quick brown fox jumps over the lazy dog."
 	};
-	UI_DrawDiv(div);
+	//UI_DrawDiv(div);
+
+	int frameCount = 0;
+	while (true) {
+		UI_DrawDiv_Animated(div, frameCount);
+		Sleep(5);
+		frameCount++;
+	}
 
 	getchar();
 	return 0;

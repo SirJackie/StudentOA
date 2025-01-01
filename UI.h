@@ -25,7 +25,7 @@ struct Div {
 void UI_Init();
 void UI_GotoXY(int x, int y);
 void UI_DrawRect(int x0, int y0, int width, int height, bool drawX, bool drawY);
-void UI_DrawWindow();
 void UI_DrawDiv(Div& div);
+void UI_DrawDiv_Animated(Div& div, int frameCount);
 
 #endif
