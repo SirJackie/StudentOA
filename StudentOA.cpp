@@ -119,7 +119,7 @@ int main() {
 	UI_DrawRect(0, 0, WIN_WIDTH, WIN_HEIGHT, true, true);
 
 	Div div = {
-		1, 1, 77, 23,
+		1, 1, 78, 24,
 		true, true, 5, 5, 3, 3,
 		"A quick brown fox jumps over the lazy dog.", true
 	};
