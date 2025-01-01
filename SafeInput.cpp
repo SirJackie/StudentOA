@@ -8,7 +8,9 @@
  * Compatibility Considering getch()
  */
 
-#ifndef _WIN32
+#ifdef _WIN32
+#define getch() _getch()
+#else
 int getch(void) {
 	struct termios oldt, newt;
 	int ch;
@@ -19,6 +21,65 @@ int getch(void) {
 	ch = getchar();
 	tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
 	return ch;
+}
+#endif
+
+/**
+ * @section
+ * Compatibility Considering getch_nonblocking()
+ */
+
+#ifdef _WIN32
+char getch_nonblocking() {
+	if (_kbhit()) {
+		return _getch();
+	}
+	return -1;
+}
+#else
+// 保存原始终端设置
+struct termios original_termios;
+bool isInNonBlockingState = false;
+
+// 恢复原始终端设置
+void restore_terminal() {
+	tcsetattr(STDIN_FILENO, TCSANOW, &original_termios);
+}
+
+// 设置终端为非阻塞模式
+void set_nonblocking() {
+	struct termios new_termios;
+	tcgetattr(STDIN_FILENO, &original_termios);
+	new_termios = original_termios;
+	new_termios.c_lflag &= ~(ICANON | ECHO);
+	tcsetattr(STDIN_FILENO, TCSANOW, &new_termios);
+	int flags = fcntl(STDIN_FILENO, F_GETFL, 0);
+	fcntl(STDIN_FILENO, F_SETFL, flags | O_NONBLOCK);
+}
+
+// 非阻塞读取字符
+int getch_nonblocking() {
+
+	if (isInNonBlockingState == false) {
+		set_nonblocking();
+		atexit(restore_terminal);
+		isInNonBlockingState = true;
+	}
+
+	struct timeval tv;
+	fd_set fds;
+	tv.tv_sec = 0;
+	tv.tv_usec = 0;
+	FD_ZERO(&fds);
+	FD_SET(STDIN_FILENO, &fds);
+	if (select(STDIN_FILENO + 1, &fds, NULL, NULL, &tv) == -1) {
+		perror("select error");
+		return -1;
+	}
+	else if (FD_ISSET(STDIN_FILENO, &fds)) {
+		return getchar();
+	}
+	return -1;
 }
 #endif
 

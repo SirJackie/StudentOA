@@ -70,6 +70,6 @@ void UI_MessageBox(const char* message);
 void UI_DrawRect_Inputting_Animated(
 	int x0, int y0, int width, int height, bool drawX, bool drawY
 );
-void UI_InputAnimation(Div div);
+void UI_InputAnimation(Div div, char* buffer, int maxLength);
 
 #endif

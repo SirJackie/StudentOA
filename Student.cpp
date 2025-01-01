@@ -296,7 +296,9 @@ void Search() {
 	UI_Render(divList, sizeof(divList) / sizeof(Div));
 	//getchar();
 
-	UI_InputAnimation(divList[2]);
+	int length = 16;
+	char buffer[16] = { 0 };
+	UI_InputAnimation(divList[2], buffer, length);
 
 
 

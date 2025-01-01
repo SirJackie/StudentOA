@@ -1,10 +1,13 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include "UI.h"
+
 #include <math.h>
 #include <time.h>
 #include <stdio.h>
 #include <conio.h>
 #include <Windows.h>
+
+#include "UI.h"
+#include "SafeInput.h"
 
 void UI_Init() {
 #ifdef _WIN32
@@ -444,7 +447,11 @@ void UI_DrawRect_Inputting_Animated(
     }
 }
 
-void UI_InputAnimation(Div div) {
+void UI_InputAnimation(Div div, char* buffer, int maxLength) {
+    int length = 0;
+    int cursorX = 55;
+    int cursorY = 17;
+
     while (true) {
         int borderX = div.x + div.marginX;
         int borderY = div.y + div.marginY;
@@ -476,5 +483,38 @@ void UI_InputAnimation(Div div) {
 
         Sleep(3);
         tick += speed;
+
+        UI_GotoXY(cursorX, cursorY);
+        char ch = getch_nonblocking();
+
+        if (ch == -1) {
+            continue;
+        }
+
+        if (ch == '\n' || ch == '\r') {
+            // Enter Pressed, Exiting.
+            break;
+        }
+
+        if (ch == 127 || ch == '\b') {
+            // Backspace Pressed, Delete 1 Char.
+            if (length > 0) {
+                // Delete Char in Buffer
+                length--;
+                buffer[length] = '\0';
+                // Delete Char on Screen
+                printf("\b \b");  // Move Left, Output Space, Move Left
+                cursorX -= 1;
+            }
+            continue;
+        }
+
+        if (length < maxLength) {
+            // If Buffer is NOT Fulled Yet.
+            buffer[length++] = ch;
+            buffer[length] = '\0';
+            putchar(ch);
+            cursorX += 1;
+        }
     }
 }
