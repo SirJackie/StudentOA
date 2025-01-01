@@ -1,10 +1,15 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include "Student.h"
-#include "UI.h"
 #include <string.h>
+
+#include <math.h>
 #include <process.h>
 #include <Windows.h>
+
+#include "UI.h"
+#include "Student.h"
+
+#define PI 3.1415926f
 
 /**
  * @section
@@ -126,10 +131,12 @@ int main() {
 	//UI_DrawDiv(div);
 
 	float completeness = 0.0f;
+	float speed = 1.0f;
 	while (true) {
 		UI_DrawDiv_Animated(div, completeness);
 		Sleep(5);
-		completeness += 1.0f;
+		speed = 0.25f + 3.5f * sin((completeness / TOTAL_COMPLETENESS) * PI);
+		completeness += speed;
 	}
 
 	getchar();
