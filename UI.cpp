@@ -285,3 +285,15 @@ void UI_DrawDiv_Animated(Div& div, float completeness) {
         completeness
     );
 }
+
+void UI_DrawDivList(Div* divList, int length) {
+    for (int i = 0; i < length; i++) {
+        UI_DrawDiv(divList[i]);
+    }
+}
+
+void UI_DrawDivList_Animated(Div* divList, int length, float completeness) {
+    for (int i = 0; i < length; i++) {
+        UI_DrawDiv_Animated(divList[i], completeness);
+    }
+}

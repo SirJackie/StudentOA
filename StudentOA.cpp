@@ -47,6 +47,43 @@ int main() {
 
 void UI_DrawStarterPage() {
 
+	UI_Init();
+
+	Div divList[] = {
+		{   // Window Border
+			0, 0, WIN_WIDTH, WIN_HEIGHT,
+			true, true, 0, 0, 0, 0,
+			"", false
+		},
+		{
+			1, 1, 78, 23,
+			true, true, 5, 5, 3, 3,
+			"A quick brown fox jumps over the lazy dog.", true
+		}
+	};
+
+	float completeness = 0.0f;
+	float speed = 1.0f;
+	while (true) {
+		UI_DrawDivList_Animated(divList, sizeof(divList) / sizeof(Div), completeness);
+		Sleep(5);
+		speed = 0.25f + 3.5f * sin((completeness / TOTAL_COMPLETENESS) * PI);
+		completeness += speed;
+
+		if (completeness >= 100.0f) {
+			break;
+		}
+	}
+
+
+
+
+
+
+
+
+
+
 	/*UI_DrawWindow();
 	int yNow = 1;
 	UI_DrawButton(yNow, "---------- Student OA ----------", false, true);
@@ -62,84 +99,59 @@ void UI_DrawStarterPage() {
 	UI_DrawButton(yNow, "r. Reset", true, false);
 	yNow += Y_BUTTON_HEIGHT;
 	UI_DrawButton(yNow, "x. Exit", true, false);
-	yNow += Y_BUTTON_HEIGHT;
-
-	UI_GotoXY(0, 25);
-	printf("Please Enter Your Option: ");*/
+	yNow += Y_BUTTON_HEIGHT;*/
 }
 
 #ifdef MODE_MAIN_OA
-//int main() {
-//	
-//	G_length = Load(G_students);
-//	UI_Init();
-//
-//	char option;
-//	bool wannaExit = false;
-//
-//	while (true) {
-//		system("cls");
-//		UI_DrawStarterPage();
-//		option = getchar();
-//		system("cls");
-//
-//		switch (option) {
-//		case 'd':
-//			Display();
-//			getchar();
-//			break;
-//		case 's':
-//			Search();
-//			getchar();
-//			break;
-//		case 'a':
-//			Append();
-//			getchar();
-//			break;
-//		case 'r':
-//			Reset();
-//			getchar();
-//			break;
-//		case 'x':
-//			printf("Exiting...\n");
-//			wannaExit = true;
-//			break;
-//		default:
-//			printf("Option NOT FOUND!\n");
-//			printf("--------------------------------\n");
-//			getchar();  // Flush Stdin
-//			getchar();
-//		}
-//
-//		if (wannaExit) {
-//			break;
-//		}
-//	}
-//
-//	return 0;
-//}
-
 int main() {
-	UI_Init();
-	UI_DrawRect(0, 0, WIN_WIDTH, WIN_HEIGHT, true, true);
+	G_length = Load(G_students);
 
-	Div div = {
-		1, 1, 78, 23,
-		true, true, 5, 5, 3, 3,
-		"A quick brown fox jumps over the lazy dog.", true
-	};
-	//UI_DrawDiv(div);
+	char option;
+	bool wannaExit = false;
 
-	float completeness = 0.0f;
-	float speed = 1.0f;
 	while (true) {
-		UI_DrawDiv_Animated(div, completeness);
-		Sleep(5);
-		speed = 0.25f + 3.5f * sin((completeness / TOTAL_COMPLETENESS) * PI);
-		completeness += speed;
+		system("cls");
+		UI_DrawStarterPage();
+
+		UI_GotoXY(0, 25);
+		printf("Please Enter Your Option: ");
+		option = getchar();
+		system("cls");
+
+		switch (option) {
+		case 'd':
+			Display();
+			getchar();
+			break;
+		case 's':
+			Search();
+			getchar();
+			break;
+		case 'a':
+			Append();
+			getchar();
+			break;
+		case 'r':
+			Reset();
+			getchar();
+			break;
+		case 'x':
+			printf("Exiting...\n");
+			wannaExit = true;
+			break;
+		default:
+			printf("Option NOT FOUND!\n");
+			printf("--------------------------------\n");
+			getchar();  // Flush Stdin
+			getchar();
+		}
+
+		if (wannaExit) {
+			break;
+		}
 	}
 
-	getchar();
 	return 0;
 }
+
 #endif
