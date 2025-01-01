@@ -1,4 +1,5 @@
 #include "UI.h"
+#include <math.h>
 #include <stdio.h>
 #include <conio.h>
 #include <Windows.h>
@@ -317,5 +318,23 @@ void UI_DrawDivList(Div* divList, int length) {
 void UI_DrawDivList_Animated(Div* divList, int length, float completeness) {
     for (int i = 0; i < length; i++) {
         UI_DrawDiv_Animated(divList[i], completeness);
+    }
+}
+
+void UI_Render(Div* divList, int length) {
+
+    UI_Init();
+
+    float completeness = 0.0f;
+    float speed = 1.0f;
+    while (true) {
+        UI_DrawDivList_Animated(divList, length, completeness);
+        Sleep(3);
+        speed = 0.25f + fabs(3.5f * sin((completeness / TOTAL_COMPLETENESS) * PI));
+        completeness += speed;
+
+        if (completeness >= 102.0f) {
+            break;
+        }
     }
 }

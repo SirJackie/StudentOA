@@ -1,24 +1,19 @@
 ﻿#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 #include <string.h>
-
-#include <math.h>
 #include <process.h>
 #include <Windows.h>
 
 #include "UI.h"
 #include "Student.h"
 
-#define PI 3.1415926f
-
 /**
  * @section
  * Main Entry
  */
 
-void UI_DrawStarterPage() {
-
-	UI_Init();
+int main() {
+	G_length = Load(G_students);
 
 	Div divList[] = {
 		{   // Window Border
@@ -68,29 +63,12 @@ void UI_DrawStarterPage() {
 		}
 	};
 
-	float completeness = 0.0f;
-	float speed = 1.0f;
-	while (true) {
-		UI_DrawDivList_Animated(divList, sizeof(divList) / sizeof(Div), completeness);
-		//Sleep(5);
-		speed = 0.25f + fabs(3.5f * sin((completeness / TOTAL_COMPLETENESS) * PI));
-		completeness += speed;
-
-		if (completeness >= 102.0f) {
-			break;
-		}
-	}
-}
-
-int main() {
-	G_length = Load(G_students);
-
 	char option;
 	bool wannaExit = false;
 
 	while (true) {
 		system("cls");
-		UI_DrawStarterPage();
+		UI_Render(divList, sizeof(divList) / sizeof(Div));
 
 		UI_GotoXY(3, 21);
 		printf("Please Enter Your Option: ");

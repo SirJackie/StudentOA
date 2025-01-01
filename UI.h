@@ -1,6 +1,7 @@
 #ifndef __UI_H__
 #define __UI_H__
 
+#define PI 3.1415926f
 #define WIN_WIDTH 80
 #define WIN_HEIGHT 25
 #define TOTAL_COMPLETENESS 100.0f
@@ -63,5 +64,6 @@ void UI_DrawDiv(Div& div);
 void UI_DrawDiv_Animated(Div& div, float completeness);
 void UI_DrawDivList(Div* divList, int length);
 void UI_DrawDivList_Animated(Div* divList, int length, float completeness);
+void UI_Render(Div* divList, int length);
 
 #endif
