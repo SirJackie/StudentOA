@@ -155,11 +155,14 @@ void UI_PrintfWordWrap(
 
 void UI_PrintfWordWrap_Animated(
     int x, int y, int maxWidth, int maxHeight, const char* str_raw, bool centered,
-    int frameCount
+    float completeness
 ) {
     int len_raw = strlen(str_raw);
     char* str = new char[len_raw + (long long)1];
     strcpy_s(str, len_raw + (long long)1, str_raw);
+
+    completeness = clampF(0.0f, completeness, 100.0f);
+    int frameCount = (float)len_raw / TOTAL_COMPLETENESS * completeness;
 
     if (frameCount < len_raw) {
         str[frameCount] = '\0';  // Truncation in Advance.

@@ -3,6 +3,27 @@
 
 #define WIN_WIDTH 80
 #define WIN_HEIGHT 25
+#define TOTAL_COMPLETENESS 100.0f
+
+/**
+ * @brief: Make sure min <= value < max. (including left but not including right)
+ * @param minVal: Minimum value for clampping.
+ * @param value: The value to clamp.
+ * @param maxVal: Maximum value for clampping.
+ * @return _T: The result of clampped value.
+ */
+
+#define clamp(minVal, value, maxVal) (((value) < (minVal))? (minVal) : (((value) > (maxVal-1))? (maxVal-1) : (value)))
+
+/**
+ * @brief: Make sure min <= value <= max. (including left AND right)
+ * @param minVal: Minimum value for clampping.
+ * @param value: The value to clamp.
+ * @param maxVal: Maximum value for clampping.
+ * @return _T: The result of clampped value.
+ */
+
+#define clampF(minVal, value, maxVal) (((value) < (minVal))? (minVal) : (((value) > (maxVal))? (maxVal) : (value)))
 
 struct Div {
 	int x;
@@ -36,7 +57,7 @@ void UI_PrintfWordWrap(
 );
 void UI_PrintfWordWrap_Animated(
 	int x, int y, int maxWidth, int maxHeight, const char* str_raw, bool centered,
-	int frameCount
+	float completeness
 );
 void UI_DrawDiv(Div& div);
 void UI_DrawDiv_Animated(Div& div, int frameCount);

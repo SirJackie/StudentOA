@@ -125,11 +125,11 @@ int main() {
 	};
 	//UI_DrawDiv(div);
 
-	int frameCount = 0;
+	float completeness = 0.0f;
 	while (true) {
-		UI_DrawDiv_Animated(div, frameCount);
+		UI_DrawDiv_Animated(div, completeness);
 		Sleep(5);
-		frameCount++;
+		completeness += 1.0f;
 	}
 
 	getchar();
