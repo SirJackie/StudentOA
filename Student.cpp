@@ -293,41 +293,153 @@ void Search() {
 		}
 	};
 
+	// Draw Search UI
 	UI_Render(divList, sizeof(divList) / sizeof(Div));
-	//getchar();
 
+	// Response to User Input
 	int length = 16;
 	char buffer[16] = { 0 };
 	UI_InputAnimation(divList[2], buffer, length);
 
-
-
-
-
-
-
-
-
-
-
-	//printf("Please Enter Student's Name, Vague Find Supported (<= 15 Chars): ");
-	//char buffer[16] = { 0 };
-	//SafeInput(buffer, 15);
-	//getchar();  // Flush Stdin
-
-	/*for (int i = 0; i < G_length; i++) {
+	// Vague Find
+	int* foundList = new int[G_length];
+	int foundListLen = 0;
+	for (int i = 0; i < G_length; i++) {
 		if (vagueFind(G_students[i].name, buffer)) {
-			printf(
-				"%d\t%s\t%s\t%d\n",
-				G_students[i].id,
-				G_students[i].name,
-				G_students[i].pwd,
-				G_students[i].year
-			);
+			foundList[foundListLen] = i;
+			foundListLen += 1;
 		}
 	}
 
-	printf("--------------------------------\n");*/
+	//
+	// Display Search Result
+	//
+
+	system("cls");
+
+	int indexOffset = 10;
+	int divLength2 = indexOffset + foundListLen * 4;
+	Div* divList2 = new Div[divLength2];
+
+	// Window Border
+	divList2[0] = {
+		0, 0, WIN_WIDTH, WIN_HEIGHT,
+		true, true, 0, 0, 0, 0,
+		"", false
+	};
+
+	// Window Title
+	divList2[1] = {
+		1, 2, 78, 3,
+		false, true, 3, 0, 0, 0,
+		"Search Result", true
+	};
+
+	// Horizontal Splitter
+	divList2[2] = {
+		4, 7, 72, 1,
+		false, true, 0, 0, 0, 0,
+		"", false
+	};
+
+	// Sheet Title 1
+	divList2[3] = {
+		3, 6, 8, 1,
+		false, false, 0, 0, 0, 0,
+		"ID", false
+	};
+
+	// Vertical Splitter
+	divList2[4] = {
+		12, 6, 1, foundListLen + 2,
+		true, false, 0, 0, 0, 0,
+		"", false
+	};
+
+	// Sheet Title 2
+	divList2[5] = {
+		13, 6, 16, 1,
+		false, false, 0, 0, 0, 0,
+		"Name", false
+	};
+
+	// Vertical Splitter
+	divList2[6] = {
+		30, 6, 1, foundListLen + 2,
+		true, false, 0, 0, 0, 0,
+		"", false
+	};
+
+	// Sheet Title 3
+	divList2[7] = {
+		31, 6, 32, 1,
+		false, false, 0, 0, 0, 0,
+		"Password", false
+	};
+
+	// Vertical Splitter
+	divList2[8] = {
+		64, 6, 1, foundListLen + 2,
+		true, false, 0, 0, 0, 0,
+		"", false
+	};
+
+	// Sheet Title 4
+	divList2[9] = {
+		65, 6, 8, 1,
+		false, false, 0, 0, 0, 0,
+		"Year", false
+	};
+
+	// Convert Student Infos Into Divs
+	char* ptr = nullptr;
+	for (int i = 0; i < foundListLen; i++) {
+
+		// Sheet Title 1
+		divList2[indexOffset + 4 * i + 0] = {
+			3, 8 + i, 8, 1,
+			false, false, 0, 0, 0, 0,
+			"", false
+		};
+		ptr = divList2[indexOffset + 4 * i + 0].text;
+		sprintf(ptr, "%d", G_students[foundList[i]].id);
+
+		// Sheet Title 2
+		divList2[indexOffset + 4 * i + 1] = {
+			13, 8 + i, 16, 1,
+			false, false, 0, 0, 0, 0,
+			"", false
+		};
+		ptr = divList2[indexOffset + 4 * i + 1].text;
+		sprintf(ptr, "%s", G_students[foundList[i]].name);
+
+		// Sheet Title 3
+		divList2[indexOffset + 4 * i + 2] = {
+			31, 8 + i, 32, 1,
+			false, false, 0, 0, 0, 0,
+			"", false
+		};
+		ptr = divList2[indexOffset + 4 * i + 2].text;
+		sprintf(ptr, "%s", G_students[foundList[i]].pwd);
+
+		// Sheet Title 4
+		divList2[indexOffset + 4 * i + 3] = {
+			65, 8 + i, 8, 1,
+			false, false, 0, 0, 0, 0,
+			"", false
+		};
+		ptr = divList2[indexOffset + 4 * i + 3].text;
+		sprintf(ptr, "%d", G_students[foundList[i]].year);
+	}
+
+	UI_Render(divList2, divLength2);
+	getchar();  // Wait For Exit
+
+	delete[] divList2;
+	divList2 = nullptr;
+
+	delete[] foundList;
+	foundList = nullptr;
 }
 
 /**
