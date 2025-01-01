@@ -84,20 +84,23 @@ void UI_DrawRect_Animated(
     int y1 = y0 + height - 1;
 
     bool isOdd;
+    completeness = clampF(0.0f, completeness, 100.0f);
+    float ratio = completeness / TOTAL_COMPLETENESS;
 
     if (drawX) {
         isOdd = height % 2 == 1;
         int centerY = (y0 + y1) / 2;
+        int frameCountY = ratio * (y1 - (centerY + 1));
         // Left
         if (isOdd) {
             UI_GotoXY(x0, centerY);
             printf("%c", 186);
         }
-        for (int i = centerY - 1; i >= y0; i--) {
+        for (int i = centerY - 1; i >= centerY - 1 - frameCountY; i--) {
             UI_GotoXY(x0, i);
             printf("%c", 186);
         }
-        for (int i = centerY + 1; i <= y1; i++) {
+        for (int i = centerY + 1; i <= centerY + 1 + frameCountY; i++) {
             UI_GotoXY(x0, i);
             printf("%c", 186);
         }
@@ -106,11 +109,11 @@ void UI_DrawRect_Animated(
             UI_GotoXY(x1, centerY);
             printf("%c", 186);
         }
-        for (int i = centerY - 1; i >= y0; i--) {
+        for (int i = centerY - 1; i >= centerY - 1 - frameCountY; i--) {
             UI_GotoXY(x1, i);
             printf("%c", 186);
         }
-        for (int i = centerY + 1; i <= y1; i++) {
+        for (int i = centerY + 1; i <= centerY + 1 + frameCountY; i++) {
             UI_GotoXY(x1, i);
             printf("%c", 186);
         }
@@ -119,16 +122,17 @@ void UI_DrawRect_Animated(
     if (drawY) {
         isOdd = width % 2 == 1;
         int centerX = (x0 + x1) / 2;
+        int frameCountX = ratio * (x1 - (centerX + 1));
         // Up
         if (isOdd) {
             UI_GotoXY(centerX, y0);
             printf("%c", 205);
         }
-        for (int i = centerX - 1; i >= x0; i--) {
+        for (int i = centerX - 1; i >= centerX - 1 - frameCountX; i--) {
             UI_GotoXY(i, y0);
             printf("%c", 205);
         }
-        for (int i = centerX + 1; i <= x1; i++) {
+        for (int i = centerX + 1; i <= centerX + 1 + frameCountX; i++) {
             UI_GotoXY(i, y0);
             printf("%c", 205);
         }
@@ -137,29 +141,31 @@ void UI_DrawRect_Animated(
             UI_GotoXY(centerX, y1);
             printf("%c", 205);
         }
-        for (int i = centerX - 1; i >= x0; i--) {
+        for (int i = centerX - 1; i >= centerX - 1 - frameCountX; i--) {
             UI_GotoXY(i, y1);
             printf("%c", 205);
         }
-        for (int i = centerX + 1; i <= x1; i++) {
+        for (int i = centerX + 1; i <= centerX + 1 + frameCountX; i++) {
             UI_GotoXY(i, y1);
             printf("%c", 205);
         }
     }
 
-    if (drawX && drawY) {
-        // Top-Left Corner
-        UI_GotoXY(x0, y0);
-        printf("%c", 201);
-        // Top-Right Corner
-        UI_GotoXY(x1, y0);
-        printf("%c", 187);
-        // Bottom-Left Corner
-        UI_GotoXY(x0, y1);
-        printf("%c", 200);
-        // Bottom-Right Corner
-        UI_GotoXY(x1, y1);
-        printf("%c", 188);
+    if (completeness > 99.5f) {
+        if (drawX && drawY) {
+            // Top-Left Corner
+            UI_GotoXY(x0, y0);
+            printf("%c", 201);
+            // Top-Right Corner
+            UI_GotoXY(x1, y0);
+            printf("%c", 187);
+            // Bottom-Left Corner
+            UI_GotoXY(x0, y1);
+            printf("%c", 200);
+            // Bottom-Right Corner
+            UI_GotoXY(x1, y1);
+            printf("%c", 188);
+        }
     }
 }
 
