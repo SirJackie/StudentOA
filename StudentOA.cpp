@@ -141,6 +141,14 @@ void UI_DrawStarterPage() {
 int main() {
 	UI_Init();
 	UI_DrawRect(0, 0, 80, 25);
+
+	Div div = {
+		1, 1, 78, 23,
+		true, 0, 0, 0, 0,
+		"A quick brown fox jumps over the lazy dog."
+	};
+	UI_DrawDiv(div);
+
 	getchar();
 	return 0;
 }

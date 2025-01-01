@@ -66,3 +66,7 @@ void UI_DrawRect(int x0, int y0, int width, int height) {
     UI_GotoXY(x1, y1);
     printf("%c", 188); // 188ÊÇÓÒÏÂ½Ç¹Õ½Ç×Ö·ûµÄASCIIÂë
 }
+
+void UI_DrawDiv(Div& div) {
+    UI_DrawRect(div.x, div.y, div.width, div.height);
+}
