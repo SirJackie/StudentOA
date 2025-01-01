@@ -8,10 +8,10 @@ struct Div {
 	int height;
 
 	bool border;
-	int paddingX;
-	int paddingY;
 	int marginX;
 	int marginY;
+	int paddingX;
+	int paddingY;
 
 	char text[1000] = { 0 };
 };

@@ -68,5 +68,10 @@ void UI_DrawRect(int x0, int y0, int width, int height) {
 }
 
 void UI_DrawDiv(Div& div) {
-    UI_DrawRect(div.x, div.y, div.width, div.height);
+    int borderX = div.x + div.marginX;
+    int borderY = div.y + div.marginY;
+    int borderWidth = div.width - 2 * div.marginX;
+    int borderHeight = div.height - 2 * div.marginY;
+
+    UI_DrawRect(borderX, borderY, borderWidth, borderHeight);
 }
