@@ -27,44 +27,55 @@ void UI_GotoXY(int x, int y) {
 #endif
 }
 
-void UI_DrawRect(int x0, int y0, int width, int height) {
+void UI_DrawRect(int x0, int y0, int width, int height, bool drawX, bool drawY) {
 
     int x1 = x0 + width - 1;
     int y1 = y0 + height - 1;
 
-    // ªÊ÷∆…œ±ﬂ
-    for (int i = x0 + 1; i <= x1 - 1; i++) {
-        UI_GotoXY(i, y0);
-        printf("%c", 205); // 205 «ÀÆ∆Ω∫·œﬂ◊÷∑˚µƒASCII¬Î
-    }
-    // ªÊ÷∆œ¬±ﬂ
-    for (int i = x0 + 1; i <= x1 - 1; i++) {
-        UI_GotoXY(i, y1);
-        printf("%c", 205);
-    }
-    // ªÊ÷∆◊Û±ﬂ
-    for (int i = y0 + 1; i <= y1 - 1; i++) {
-        UI_GotoXY(x0, i);
-        printf("%c", 186); // 186 «¥π÷± ˙œﬂ◊÷∑˚µƒASCII¬Î
-    }
-    // ªÊ÷∆”“±ﬂ
-    for (int i = y0 + 1; i <= y1 - 1; i++) {
-        UI_GotoXY(x1, i);
-        printf("%c", 186);
+    if (drawX) {
+        // Left
+        for (int i = y0; i <= y1; i++) {
+            UI_GotoXY(x0, i);
+            printf("%c", 186);
+        }
+        // Right
+        for (int i = y0; i <= y1; i++) {
+            UI_GotoXY(x1, i);
+            printf("%c", 186);
+        }
     }
 
-    // ªÊ÷∆◊Û…œΩ«
-    UI_GotoXY(x0, y0);
-    printf("%c", 201); // 201 «◊Û…œΩ«π’Ω«◊÷∑˚µƒASCII¬Î
-    // ªÊ÷∆”“…œΩ«
-    UI_GotoXY(x1, y0);
-    printf("%c", 187); // 187 «”“…œΩ«π’Ω«◊÷∑˚µƒASCII¬Î
-    // ªÊ÷∆◊Ûœ¬Ω«
-    UI_GotoXY(x0, y1);
-    printf("%c", 200); // 200 «◊Ûœ¬Ω«π’Ω«◊÷∑˚µƒASCII¬Î
-    // ªÊ÷∆”“œ¬Ω«
-    UI_GotoXY(x1, y1);
-    printf("%c", 188); // 188 «”“œ¬Ω«π’Ω«◊÷∑˚µƒASCII¬Î
+    if (drawY) {
+        // Up
+        for (int i = x0; i <= x1; i++) {
+            UI_GotoXY(i, y0);
+            printf("%c", 205);
+        }
+        // Down
+        for (int i = x0; i <= x1; i++) {
+            UI_GotoXY(i, y1);
+            printf("%c", 205);
+        }
+    }
+
+    if (drawX && drawY) {
+        // Top-Left Corner
+        UI_GotoXY(x0, y0);
+        printf("%c", 201);
+        // Top-Right Corner
+        UI_GotoXY(x1, y0);
+        printf("%c", 187);
+        // Bottom-Left Corner
+        UI_GotoXY(x0, y1);
+        printf("%c", 200);
+        // Bottom-Right Corner
+        UI_GotoXY(x1, y1);
+        printf("%c", 188);
+    }
+}
+
+void UI_DrawWindow() {
+    UI_DrawRect(0, 0, WIN_WIDTH, WIN_HEIGHT, true, true);
 }
 
 void UI_PrintfWordWrap(int x, int y, int maxWidth, int maxHeight, const char* str) {
@@ -93,7 +104,12 @@ void UI_DrawDiv(Div& div) {
     int borderY = div.y + div.marginY;
     int borderWidth = div.width - 2 * div.marginX;
     int borderHeight = div.height - 2 * div.marginY;
-    if (div.border) UI_DrawRect(borderX, borderY, borderWidth, borderHeight);
+
+    if (div.borderX || div.borderY) {
+        UI_DrawRect(
+            borderX, borderY, borderWidth, borderHeight, div.borderX, div.borderY
+        );
+    }
     
     int textX = borderX + 1 + div.paddingX;
     int textY = borderY + 1 + div.paddingY;

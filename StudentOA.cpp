@@ -39,34 +39,9 @@ int main() {
 #define X_AXIS_PADDING 12
 #define Y_BUTTON_HEIGHT 3
 
-void UI_DrawWindow() {
-	UI_DrawRect(0, 0, 80, 25);
-}
-
-void UI_DrawButton(int y, const char* content, bool isBordered, bool isTextCentered) {
-	int startX = X_AXIS_PADDING;
-	int startY = y;
-	int endX = CONSOLE_WIDTH - X_AXIS_PADDING - 2;
-	int endY = y + Y_BUTTON_HEIGHT;
-
-	if (isBordered) {
-		UI_DrawRect(startX, startY, endX, endY);
-	}
-	
-	UI_GotoXY(startX + 1, startY + 1);
-	if (isTextCentered) {
-		int buttonWidth = endX - startX;
-		int spaces = (buttonWidth - strlen(content)) / 2 - 1;
-		for (int i = 0; i < spaces; i++) {
-			printf(" ");
-		}
-	}
-	printf("%s", content);
-}
-
 void UI_DrawStarterPage() {
 
-	UI_DrawWindow();
+	/*UI_DrawWindow();
 	int yNow = 1;
 	UI_DrawButton(yNow, "---------- Student OA ----------", false, true);
 	yNow += Y_BUTTON_HEIGHT;
@@ -84,7 +59,7 @@ void UI_DrawStarterPage() {
 	yNow += Y_BUTTON_HEIGHT;
 
 	UI_GotoXY(0, 25);
-	printf("Please Enter Your Option: ");
+	printf("Please Enter Your Option: ");*/
 }
 
 #ifdef MODE_MAIN_OA
@@ -140,11 +115,11 @@ void UI_DrawStarterPage() {
 
 int main() {
 	UI_Init();
-	UI_DrawRect(0, 0, 80, 25);
+	UI_DrawWindow();
 
 	Div div = {
 		1, 1, 78, 23,
-		true, 5, 5, 3, 3,
+		false, true, 5, 5, 3, 3,
 		"A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. A quick brown fox jumps over the lazy dog. "
 	};
 	UI_DrawDiv(div);
