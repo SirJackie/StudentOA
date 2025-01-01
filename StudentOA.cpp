@@ -56,9 +56,44 @@ void UI_DrawStarterPage() {
 			"", false
 		},
 		{
-			1, 1, 78, 23,
-			true, true, 5, 5, 3, 3,
-			"A quick brown fox jumps over the lazy dog.", true
+			1, 2, 78, 3,
+			false, true, 3, 0, 0, 0,
+			"Student OA", true
+		},
+		{
+			1, 6, 78, 1,
+			false, false, 0, 0, 0, 0,
+			"Input Your Option, e.g. 'd', Then Press Enter.", true
+		},
+		{
+			1, 8, 38, 3,
+			true, true, 3, 0, 0, 0,
+			"d. Display", false
+		},
+		{
+			1, 12, 38, 3,
+			true, true, 3, 0, 0, 0,
+			"s. Search", false
+		},
+		{
+			1, 16, 38, 3,
+			true, true, 3, 0, 0, 0,
+			"a. Append", false
+		},
+		{
+			40, 8, 38, 3,
+			true, true, 3, 0, 0, 0,
+			"r. Reset Password", false
+		},
+		{
+			40, 12, 38, 3,
+			true, true, 3, 0, 0, 0,
+			"f. Reset Database", false
+		},
+		{
+			40, 16, 38, 3,
+			true, true, 3, 0, 0, 0,
+			"x. Exit", false
 		}
 	};
 
@@ -66,40 +101,14 @@ void UI_DrawStarterPage() {
 	float speed = 1.0f;
 	while (true) {
 		UI_DrawDivList_Animated(divList, sizeof(divList) / sizeof(Div), completeness);
-		Sleep(5);
-		speed = 0.25f + 3.5f * sin((completeness / TOTAL_COMPLETENESS) * PI);
+		//Sleep(5);
+		speed = 0.25f + fabs(3.5f * sin((completeness / TOTAL_COMPLETENESS) * PI));
 		completeness += speed;
 
-		if (completeness >= 100.0f) {
+		if (completeness >= 102.0f) {
 			break;
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-	/*UI_DrawWindow();
-	int yNow = 1;
-	UI_DrawButton(yNow, "---------- Student OA ----------", false, true);
-	yNow += Y_BUTTON_HEIGHT;
-	UI_DrawButton(yNow, "Enter Your Option, e.g. 'd', Then Press Enter.", false, true);
-	yNow += Y_BUTTON_HEIGHT;
-	UI_DrawButton(yNow, "d. Display", true, false);
-	yNow += Y_BUTTON_HEIGHT;
-	UI_DrawButton(yNow, "s. Search", true, false);
-	yNow += Y_BUTTON_HEIGHT;
-	UI_DrawButton(yNow, "a. Append", true, false);
-	yNow += Y_BUTTON_HEIGHT;
-	UI_DrawButton(yNow, "r. Reset", true, false);
-	yNow += Y_BUTTON_HEIGHT;
-	UI_DrawButton(yNow, "x. Exit", true, false);
-	yNow += Y_BUTTON_HEIGHT;*/
 }
 
 #ifdef MODE_MAIN_OA
@@ -113,7 +122,7 @@ int main() {
 		system("cls");
 		UI_DrawStarterPage();
 
-		UI_GotoXY(0, 25);
+		UI_GotoXY(3, 21);
 		printf("Please Enter Your Option: ");
 		option = getchar();
 		system("cls");

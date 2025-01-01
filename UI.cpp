@@ -185,10 +185,12 @@ void UI_PrintfWordWrap(
             lineCount += 1;
         }
         else {
-            int this_len = strlen(str + i);
-            int padding = (maxWidth - this_len) / 2;
-            for (int j = 0; j < padding; j++) {
-                printf(" ");
+            if (centered) {
+                int this_len = strlen(str + i);
+                int padding = (maxWidth - this_len) / 2;
+                for (int j = 0; j < padding; j++) {
+                    printf(" ");
+                }
             }
             printf("%s\n", str + i);
             lineCount += 1;
@@ -225,10 +227,12 @@ void UI_PrintfWordWrap_Animated(
             lineCount += 1;
         }
         else {
-            int this_len = strlen(str + i);
-            int padding = (maxWidth - this_len) / 2;
-            for (int j = 0; j < padding; j++) {
-                printf(" ");
+            if (centered) {
+                int this_len = strlen(str + i);
+                int padding = (maxWidth - this_len) / 2;
+                for (int j = 0; j < padding; j++) {
+                    printf(" ");
+                }
             }
             printf("%s\n", str + i);
             lineCount += 1;
@@ -280,6 +284,11 @@ void UI_DrawDiv_Animated(Div& div, float completeness) {
     int textY = borderY + 1 + div.paddingY;
     int textWidth = borderWidth - 2 * (1 + div.paddingX);    // 1 for BorderWidth
     int textHeight = borderHeight - 2 * (1 + div.paddingY);  // 1 for BorderHeight
+
+    if (div.height == 1) {
+        textY = borderY;
+    }
+
     UI_PrintfWordWrap_Animated(
         textX, textY, textWidth, textHeight, div.text, div.text_centered,
         completeness
