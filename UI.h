@@ -65,5 +65,6 @@ void UI_DrawDiv_Animated(Div& div, float completeness);
 void UI_DrawDivList(Div* divList, int length);
 void UI_DrawDivList_Animated(Div* divList, int length, float completeness);
 void UI_Render(Div* divList, int length);
+void UI_MessageBox(const char* message);
 
 #endif

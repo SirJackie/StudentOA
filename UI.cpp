@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "UI.h"
 #include <math.h>
 #include <stdio.h>
@@ -337,4 +338,35 @@ void UI_Render(Div* divList, int length) {
             break;
         }
     }
+}
+
+void UI_MessageBox(const char* message) {
+    Div divList[] = {
+        {   // Window Border
+            0, 0, WIN_WIDTH, WIN_HEIGHT,
+            true, true, 0, 0, 0, 0,
+            "", false
+        },
+        {
+            1, 2, 78, 3,
+            false, true, 3, 0, 0, 0,
+            "A Message from UI Manager", true
+        },
+        {
+            1, 6, 78, 1,
+            false, false, 0, 0, 0, 0,
+            "", true
+        },
+        {
+            1, 7, 78, 1,
+            false, false, 0, 0, 0, 0,
+            "Press Any Key to Continue...", true
+        }
+    };
+
+    char* ptr = divList[2].text;
+    strcpy(ptr, message);
+
+    UI_Render(divList, sizeof(divList) / sizeof(Div));
+    getchar();  // Wait for Exit.
 }

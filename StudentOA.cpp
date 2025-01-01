@@ -94,17 +94,18 @@ int main() {
 			break;
 		case 'f':
 			ResetDatabase();
-			getchar();
+			UI_MessageBox("Successfully reset the Database.");
+			getchar();  // Flush Stdin
 			break;
 		case 'x':
-			printf("Exiting...\n");
 			wannaExit = true;
+			UI_MessageBox("The Program will be Exited Right Now.");
+			getchar();  // Flush Stdin
 			break;
 		default:
-			printf("Option NOT FOUND!\n");
-			printf("--------------------------------\n");
-			getchar();  // Flush Stdin
-			getchar();
+			UI_MessageBox("Option NOT FOUND!");
+			if (option != '\n') getchar();  // Flush Stdin if Needed.
+			break;
 		}
 
 		if (wannaExit) {
