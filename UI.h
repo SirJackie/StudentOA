@@ -50,7 +50,7 @@ void UI_DrawRect(
 	int x0, int y0, int width, int height, bool drawX, bool drawY
 );
 void UI_DrawRect_Animated(
-	int x0, int y0, int width, int height, bool drawX, bool drawY, int frameCount
+	int x0, int y0, int width, int height, bool drawX, bool drawY, float completeness
 );
 void UI_PrintfWordWrap(
 	int x, int y, int maxWidth, int maxHeight, const char* str, bool centered
@@ -60,6 +60,6 @@ void UI_PrintfWordWrap_Animated(
 	float completeness
 );
 void UI_DrawDiv(Div& div);
-void UI_DrawDiv_Animated(Div& div, int frameCount);
+void UI_DrawDiv_Animated(Div& div, float completeness);
 
 #endif

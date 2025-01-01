@@ -119,18 +119,20 @@ int main() {
 	UI_DrawRect(0, 0, WIN_WIDTH, WIN_HEIGHT, true, true);
 
 	Div div = {
-		1, 1, 78, 23,
-		true, true, 5, 5, 3, 3,
+		1, 1, 19, 9,
+		true, true, 0, 0, 0, 0,
 		"A quick brown fox jumps over the lazy dog.", true
 	};
 	//UI_DrawDiv(div);
 
-	float completeness = 0.0f;
+	/*float completeness = 0.0f;
 	while (true) {
 		UI_DrawDiv_Animated(div, completeness);
 		Sleep(5);
 		completeness += 1.0f;
-	}
+	}*/
+
+	UI_DrawDiv_Animated(div, 101.0f);
 
 	getchar();
 	return 0;

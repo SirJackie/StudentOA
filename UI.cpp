@@ -77,36 +77,56 @@ void UI_DrawRect(
 }
 
 void UI_DrawRect_Animated(
-    int x0, int y0, int width, int height, bool drawX, bool drawY, int frameCount
+    int x0, int y0, int width, int height, bool drawX, bool drawY, float completeness
 ) {
 
     int x1 = x0 + width - 1;
     int y1 = y0 + height - 1;
 
+    bool isOdd;
+
     if (drawX) {
+        isOdd = height % 2 == 1;
         // Left
-        for (int i = y0; i <= y1; i++) {
+        if (isOdd) {
+            UI_GotoXY(x0, (y0 + y1) / 2);
+            printf("%c", 186);
+        }
+        /*for (int i = y0; i <= y1; i++) {
             UI_GotoXY(x0, i);
             printf("%c", 186);
-        }
+        }*/
         // Right
-        for (int i = y0; i <= y1; i++) {
-            UI_GotoXY(x1, i);
+        if (isOdd) {
+            UI_GotoXY(x1, (y0 + y1) / 2);
             printf("%c", 186);
         }
+        /*for (int i = y0; i <= y1; i++) {
+            UI_GotoXY(x1, i);
+            printf("%c", 186);
+        }*/
     }
 
     if (drawY) {
+        isOdd = width % 2 == 1;
         // Up
-        for (int i = x0; i <= x1; i++) {
+        if (isOdd) {
+            UI_GotoXY((x0 + x1) / 2, y0);
+            printf("%c", 205);
+        }
+        /*for (int i = x0; i <= x1; i++) {
             UI_GotoXY(i, y0);
             printf("%c", 205);
-        }
+        }*/
         // Down
-        for (int i = x0; i <= x1; i++) {
-            UI_GotoXY(i, y1);
+        if (isOdd) {
+            UI_GotoXY((x0 + x1) / 2, y1);
             printf("%c", 205);
         }
+        /*for (int i = x0; i <= x1; i++) {
+            UI_GotoXY(i, y1);
+            printf("%c", 205);
+        }*/
     }
 
     if (drawX && drawY) {
@@ -216,15 +236,16 @@ void UI_DrawDiv(Div& div) {
     );
 }
 
-void UI_DrawDiv_Animated(Div& div, int frameCount) {
+void UI_DrawDiv_Animated(Div& div, float completeness) {
     int borderX = div.x + div.marginX;
     int borderY = div.y + div.marginY;
     int borderWidth = div.width - 2 * div.marginX;
     int borderHeight = div.height - 2 * div.marginY;
 
     if (div.borderX || div.borderY) {
-        UI_DrawRect(
-            borderX, borderY, borderWidth, borderHeight, div.borderX, div.borderY
+        UI_DrawRect_Animated(
+            borderX, borderY, borderWidth, borderHeight, div.borderX, div.borderY,
+            completeness
         );
     }
 
@@ -234,6 +255,6 @@ void UI_DrawDiv_Animated(Div& div, int frameCount) {
     int textHeight = borderHeight - 2 * (1 + div.paddingY);  // 1 for BorderHeight
     UI_PrintfWordWrap_Animated(
         textX, textY, textWidth, textHeight, div.text, div.text_centered,
-        frameCount
+        completeness
     );
 }
