@@ -67,7 +67,7 @@ void UI_DrawRect(int x0, int y0, int width, int height) {
     printf("%c", 188); // 188ÊÇÓÒÏÂ½Ç¹Õ½Ç×Ö·ûµÄASCIIÂë
 }
 
-void UI_PrintfWordWrap(int x, int y, const char* str, int maxWidth, int maxHeight) {
+void UI_PrintfWordWrap(int x, int y, int maxWidth, int maxHeight, const char* str) {
     int len = strlen(str);
     int lineCount = 0;
 
@@ -95,9 +95,9 @@ void UI_DrawDiv(Div& div) {
     int borderHeight = div.height - 2 * div.marginY;
     if (div.border) UI_DrawRect(borderX, borderY, borderWidth, borderHeight);
     
-    int textX = borderX + 1;
-    int textY = borderY + 1;
-    int textWidth = borderWidth - 2 * 1;    // 1 for BorderWidth
-    int textHeight = borderHeight - 2 * 1;  // 1 for BorderHeight
-    UI_PrintfWordWrap(textX, textY, div.text, 20, 2);
+    int textX = borderX + 1 + div.paddingX;
+    int textY = borderY + 1 + div.paddingY;
+    int textWidth = borderWidth - 2 * (1 + div.paddingX);    // 1 for BorderWidth
+    int textHeight = borderHeight - 2 * (1 + div.paddingY);  // 1 for BorderHeight
+    UI_PrintfWordWrap(textX, textY, textWidth, textHeight, div.text);
 }
