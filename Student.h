@@ -54,5 +54,6 @@ void Display();
 void Search();
 void Append();
 void Reset();
+void ResetDatabase();
 
 #endif

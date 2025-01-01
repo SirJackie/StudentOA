@@ -260,3 +260,20 @@ void Reset() {
 	getchar();  // Flush Stdin
 	printf("--------------------------------\n");
 }
+
+void ResetDatabase() {
+	Student students[5] = {
+		{1001, "Jackie", "dumbasfuk", 2005},
+		{1002, "Sarah", "lululemon", 2006},
+		{1003, "Paul", "rockstarOG", 2005},
+		{1004, "Vangel", "immaGreek", 1979},
+		{1005, "Carl", "losantoYeah", 1985}
+	};
+
+	// Save the Initial Database
+	int length = 5;
+	Save(students, length);
+
+	// Remember to Reload Database
+	G_length = Load(G_students);
+}

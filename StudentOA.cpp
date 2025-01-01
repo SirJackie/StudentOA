@@ -13,37 +13,8 @@
 
 /**
  * @section
- * Mode Selection
- */
-
-//#define MODE_CREATOR
-#define MODE_MAIN_OA
-
-/**
- * @section
  * Main Entry
  */
-
-#ifdef MODE_CREATOR
-int main() {
-	Student students[5] = {
-		{1001, "Jackie", "dumbasfuk", 2005},
-		{1002, "Sarah", "lululemon", 2006},
-		{1003, "Paul", "rockstarOG", 2005},
-		{1004, "Vangel", "immaGreek", 1979},
-		{1005, "Carl", "losantoYeah", 1985}
-	};
-
-	int length = 5;
-
-	Save(students, length);
-}
-#endif
-
-#define CONSOLE_WIDTH  80
-#define CONSOLE_HEIGHT 25
-#define X_AXIS_PADDING 12
-#define Y_BUTTON_HEIGHT 3
 
 void UI_DrawStarterPage() {
 
@@ -111,7 +82,6 @@ void UI_DrawStarterPage() {
 	}
 }
 
-#ifdef MODE_MAIN_OA
 int main() {
 	G_length = Load(G_students);
 
@@ -144,6 +114,10 @@ int main() {
 			Reset();
 			getchar();
 			break;
+		case 'f':
+			ResetDatabase();
+			getchar();
+			break;
 		case 'x':
 			printf("Exiting...\n");
 			wannaExit = true;
@@ -162,5 +136,3 @@ int main() {
 
 	return 0;
 }
-
-#endif
