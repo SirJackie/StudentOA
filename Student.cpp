@@ -2,6 +2,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <process.h>
+
+#include "UI.h"
 #include "Student.h"
 #include "SafeInput.h"
 
@@ -143,17 +145,127 @@ bool vagueFind(const char* str, const char* subStr) {
  */
 
 void Display() {
+
+	int indexOffset = 10;
+	int divLength = indexOffset + G_length * 4;
+	Div* divList = new Div[divLength];
+
+	// Window Border
+	divList[0] = {
+		0, 0, WIN_WIDTH, WIN_HEIGHT,
+		true, true, 0, 0, 0, 0,
+		"", false
+	};
+
+	// Window Title
+	divList[1] = {
+		1, 2, 78, 3,
+		false, true, 3, 0, 0, 0,
+		"Display", true
+	};
+
+	// Horizontal Splitter
+	divList[2] = {
+		4, 7, 72, 1,
+		false, true, 0, 0, 0, 0,
+		"", false
+	};
+
+	// Sheet Title 1
+	divList[3] = {
+		3, 6, 8, 1,
+		false, false, 0, 0, 0, 0,
+		"ID", false
+	};
+
+	// Vertical Splitter
+	divList[4] = {
+		12, 6, 1, G_length + 2,
+		true, false, 0, 0, 0, 0,
+		"", false
+	};
+
+	// Sheet Title 2
+	divList[5] = {
+		13, 6, 16, 1,
+		false, false, 0, 0, 0, 0,
+		"Name", false
+	};
+
+	// Vertical Splitter
+	divList[6] = {
+		30, 6, 1, G_length + 2,
+		true, false, 0, 0, 0, 0,
+		"", false
+	};
+
+	// Sheet Title 3
+	divList[7] = {
+		31, 6, 32, 1,
+		false, false, 0, 0, 0, 0,
+		"Password", false
+	};
+
+	// Vertical Splitter
+	divList[8] = {
+		64, 6, 1, G_length + 2,
+		true, false, 0, 0, 0, 0,
+		"", false
+	};
+
+	// Sheet Title 4
+	divList[9] = {
+		65, 6, 8, 1,
+		false, false, 0, 0, 0, 0,
+		"Year", false
+	};
+
+	// Convert Student Infos Into Divs
+	char* ptr = nullptr;
 	for (int i = 0; i < G_length; i++) {
-		printf(
-			"%d\t%s\t%s\t%d\n",
-			G_students[i].id,
-			G_students[i].name,
-			G_students[i].pwd,
-			G_students[i].year
-		);
+
+		// Sheet Title 1
+		divList[indexOffset + 4 * i + 0] = {
+			3, 8 + i, 8, 1,
+			false, false, 0, 0, 0, 0,
+			"", false
+		};
+		ptr = divList[indexOffset + 4 * i + 0].text;
+		sprintf(ptr, "%d", G_students[i].id);
+
+		// Sheet Title 2
+		divList[indexOffset + 4 * i + 1] = {
+			13, 8 + i, 16, 1,
+			false, false, 0, 0, 0, 0,
+			"", false
+		};
+		ptr = divList[indexOffset + 4 * i + 1].text;
+		sprintf(ptr, "%s", G_students[i].name);
+
+		// Sheet Title 3
+		divList[indexOffset + 4 * i + 2] = {
+			31, 8 + i, 32, 1,
+			false, false, 0, 0, 0, 0,
+			"", false
+		};
+		ptr = divList[indexOffset + 4 * i + 2].text;
+		sprintf(ptr, "%s", G_students[i].pwd);
+
+		// Sheet Title 4
+		divList[indexOffset + 4 * i + 3] = {
+			65, 8 + i, 8, 1,
+			false, false, 0, 0, 0, 0,
+			"", false
+		};
+		ptr = divList[indexOffset + 4 * i + 3].text;
+		sprintf(ptr, "%d", G_students[i].year);
 	}
-	getchar();  // Flush Stdin
-	printf("--------------------------------\n");
+
+	UI_Render(divList, divLength);
+	getchar();  // Wait For Exit
+
+	delete[] divList;
+	divList = nullptr;
 }
 
 /**
