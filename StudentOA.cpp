@@ -39,21 +39,21 @@ int main() {
 #define X_AXIS_PADDING 12
 #define Y_BUTTON_HEIGHT 3
 
-void DrawWindow() {
-	DrawRect(0, 0, 80, 25);
+void UI_DrawWindow() {
+	UI_DrawRect(0, 0, 80, 25);
 }
 
-void DrawButton(int y, const char* content, bool isBordered, bool isTextCentered) {
+void UI_DrawButton(int y, const char* content, bool isBordered, bool isTextCentered) {
 	int startX = X_AXIS_PADDING;
 	int startY = y;
 	int endX = CONSOLE_WIDTH - X_AXIS_PADDING - 2;
 	int endY = y + Y_BUTTON_HEIGHT;
 
 	if (isBordered) {
-		DrawRect(startX, startY, endX, endY);
+		UI_DrawRect(startX, startY, endX, endY);
 	}
 	
-	GotoXY(startX + 1, startY + 1);
+	UI_GotoXY(startX + 1, startY + 1);
 	if (isTextCentered) {
 		int buttonWidth = endX - startX;
 		int spaces = (buttonWidth - strlen(content)) / 2 - 1;
@@ -64,25 +64,26 @@ void DrawButton(int y, const char* content, bool isBordered, bool isTextCentered
 	printf("%s", content);
 }
 
-void DrawStarterPage() {
-	DrawWindow();
+void UI_DrawStarterPage() {
+
+	UI_DrawWindow();
 	int yNow = 1;
-	DrawButton(yNow, "---------- Student OA ----------", false, true);
+	UI_DrawButton(yNow, "---------- Student OA ----------", false, true);
 	yNow += Y_BUTTON_HEIGHT;
-	DrawButton(yNow, "Enter Your Option, e.g. 'd', Then Press Enter.", false, true);
+	UI_DrawButton(yNow, "Enter Your Option, e.g. 'd', Then Press Enter.", false, true);
 	yNow += Y_BUTTON_HEIGHT;
-	DrawButton(yNow, "d. Display", true, false);
+	UI_DrawButton(yNow, "d. Display", true, false);
 	yNow += Y_BUTTON_HEIGHT;
-	DrawButton(yNow, "s. Search", true, false);
+	UI_DrawButton(yNow, "s. Search", true, false);
 	yNow += Y_BUTTON_HEIGHT;
-	DrawButton(yNow, "a. Append", true, false);
+	UI_DrawButton(yNow, "a. Append", true, false);
 	yNow += Y_BUTTON_HEIGHT;
-	DrawButton(yNow, "r. Reset", true, false);
+	UI_DrawButton(yNow, "r. Reset", true, false);
 	yNow += Y_BUTTON_HEIGHT;
-	DrawButton(yNow, "x. Exit", true, false);
+	UI_DrawButton(yNow, "x. Exit", true, false);
 	yNow += Y_BUTTON_HEIGHT;
 
-	GotoXY(0, 25);
+	UI_GotoXY(0, 25);
 	printf("Please Enter Your Option: ");
 }
 
@@ -90,13 +91,14 @@ void DrawStarterPage() {
 int main() {
 	
 	G_length = Load(G_students);
+	UI_Init();
 
 	char option;
 	bool wannaExit = false;
 
 	while (true) {
 		system("cls");
-		DrawStarterPage();
+		UI_DrawStarterPage();
 		option = getchar();
 		system("cls");
 
