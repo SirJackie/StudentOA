@@ -119,7 +119,7 @@ void SafeInput(char* buffer, int maxLength) {
 			continue;
 		}
 
-		if (length < maxLength) {
+		if (length < maxLength - 1) {
 			// If Buffer is NOT Fulled Yet.
 			buffer[length++] = ch;
 			buffer[length] = '\0';

@@ -448,26 +448,27 @@ void UI_DrawRect_Inputting_Animated(
 }
 
 void UI_InputAnimation(Div div, char* buffer, int maxLength) {
-    int length = 0;
-    int cursorX = 55;
-    int cursorY = 17;
+    int borderX = div.x + div.marginX;
+    int borderY = div.y + div.marginY;
+    int borderWidth = div.width - 2 * div.marginX;
+    int borderHeight = div.height - 2 * div.marginY;
+
+    int textX = borderX + 1 + div.paddingX;
+    int textY = borderY + 1 + div.paddingY;
+    int textWidth = borderWidth - 2 * (1 + div.paddingX);    // 1 for BorderWidth
+    int textHeight = borderHeight - 2 * (1 + div.paddingY);  // 1 for BorderHeight
+
+    int inputtedLength = 0;
+    int cursorX = borderX + 1 + div.paddingX + strlen(div.text);
+    int cursorY = borderY + 1 + div.paddingY;
 
     while (true) {
-        int borderX = div.x + div.marginX;
-        int borderY = div.y + div.marginY;
-        int borderWidth = div.width - 2 * div.marginX;
-        int borderHeight = div.height - 2 * div.marginY;
 
         if (div.borderX || div.borderY) {
             UI_DrawRect_Inputting_Animated(
                 borderX, borderY, borderWidth, borderHeight, div.borderX, div.borderY
             );
         }
-
-        int textX = borderX + 1 + div.paddingX;
-        int textY = borderY + 1 + div.paddingY;
-        int textWidth = borderWidth - 2 * (1 + div.paddingX);    // 1 for BorderWidth
-        int textHeight = borderHeight - 2 * (1 + div.paddingY);  // 1 for BorderHeight
 
         if (div.width == 1) {
             textX = borderX;
@@ -498,10 +499,10 @@ void UI_InputAnimation(Div div, char* buffer, int maxLength) {
 
         if (ch == 127 || ch == '\b') {
             // Backspace Pressed, Delete 1 Char.
-            if (length > 0) {
+            if (inputtedLength > 0) {
                 // Delete Char in Buffer
-                length--;
-                buffer[length] = '\0';
+                inputtedLength--;
+                buffer[inputtedLength] = '\0';
                 // Delete Char on Screen
                 printf("\b \b");  // Move Left, Output Space, Move Left
                 cursorX -= 1;
@@ -509,10 +510,10 @@ void UI_InputAnimation(Div div, char* buffer, int maxLength) {
             continue;
         }
 
-        if (length < maxLength) {
+        if (inputtedLength < maxLength - 1) {
             // If Buffer is NOT Fulled Yet.
-            buffer[length++] = ch;
-            buffer[length] = '\0';
+            buffer[inputtedLength++] = ch;
+            buffer[inputtedLength] = '\0';
             putchar(ch);
             cursorX += 1;
         }
