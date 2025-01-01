@@ -262,6 +262,15 @@ void UI_DrawDiv(Div& div) {
     int textY = borderY + 1 + div.paddingY;
     int textWidth = borderWidth - 2 * (1 + div.paddingX);    // 1 for BorderWidth
     int textHeight = borderHeight - 2 * (1 + div.paddingY);  // 1 for BorderHeight
+
+    if (div.width == 1) {
+        textX = borderX;
+    }
+
+    if (div.height == 1) {
+        textY = borderY;
+    }
+
     UI_PrintfWordWrap(
         textX, textY, textWidth, textHeight, div.text, div.text_centered
     );
@@ -284,6 +293,10 @@ void UI_DrawDiv_Animated(Div& div, float completeness) {
     int textY = borderY + 1 + div.paddingY;
     int textWidth = borderWidth - 2 * (1 + div.paddingX);    // 1 for BorderWidth
     int textHeight = borderHeight - 2 * (1 + div.paddingY);  // 1 for BorderHeight
+
+    if (div.width == 1) {
+        textX = borderX;
+    }
 
     if (div.height == 1) {
         textY = borderY;
