@@ -328,6 +328,7 @@ void UI_DrawDivList_Animated(Div* divList, int length, float completeness) {
 
 void UI_Render(Div* divList, int length) {
 
+    system("cls");
     UI_Init();
 
     float completeness = 0.0f;

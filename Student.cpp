@@ -448,34 +448,59 @@ void Search() {
  */
 
 void Append() {
-	printf("Please Enter the Student's Information that You Wanna Append.\n");
+	Div divList[] = {
+		{   // Window Border
+			0, 0, WIN_WIDTH, WIN_HEIGHT,
+			true, true, 0, 0, 0, 0,
+			"", false
+		},
+		{
+			1, 2, 78, 3,
+			false, true, 3, 0, 0, 0,
+			"Append", true
+		},
+		{
+			1, 6, 78, 5,
+			true, true, 3, 0, 1, 1,
+			"Name: ", false
+		},
+		{
+			1, 11, 78, 5,
+			true, true, 3, 0, 1, 1,
+			"Password: ", false
+		},
+		{
+			1, 16, 78, 5,
+			true, true, 3, 0, 1, 1,
+			"Year: ", false
+		}
+	};
 
-	printf("Name (<= 15 Chars): ");
-	SafeInput(G_students[G_length].name, 15);
+	// Draw Append UI
+	UI_Render(divList, sizeof(divList) / sizeof(Div));
 
-	printf("Password (<= 31 Chars): ");
-	SafeInput(G_students[G_length].pwd, 31);
+	// Response to User Input (Input: Name)
+	UI_InputAnimation(divList[2], G_students[G_length].name, 16);
 
-	printf("Year: ");
-	scanf("%d", &G_students[G_length].year);
+	// Response to User Input (Input: Password)
+	UI_InputAnimation(divList[3], G_students[G_length].pwd, 32);
+
+	// Response to User Input (Input: Year)
+	char buffer[16] = { 0 };
+	UI_InputAnimation(divList[4], buffer, 16);
+	sscanf(buffer, "%d", &G_students[G_length].year);
 
 	// ID Self Increment
 	G_students[G_length].id = G_students[G_length - 1].id + 1;
 
-	printf(
-		"New Student Appended:\n%d\t%s\t%s\t%d\n",
-		G_students[G_length].id,
-		G_students[G_length].name,
-		G_students[G_length].pwd,
-		G_students[G_length].year
-	);
-	G_length++;   // Step in
+	// Step in
+	G_length++;
 
+	// Update Database
 	Save(G_students, G_length);
-	printf("Data Saved to the Database.\n");
 
-	getchar();  // Flush Stdin
-	printf("--------------------------------\n");
+	// Successful Message
+	UI_MessageBox("New Student Appended Successfully! Data Saved to the Database.");
 }
 
 /**
