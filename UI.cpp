@@ -87,46 +87,64 @@ void UI_DrawRect_Animated(
 
     if (drawX) {
         isOdd = height % 2 == 1;
+        int centerY = (y0 + y1) / 2;
         // Left
         if (isOdd) {
-            UI_GotoXY(x0, (y0 + y1) / 2);
+            UI_GotoXY(x0, centerY);
             printf("%c", 186);
         }
-        /*for (int i = y0; i <= y1; i++) {
+        for (int i = centerY - 1; i >= y0; i--) {
             UI_GotoXY(x0, i);
             printf("%c", 186);
-        }*/
-        // Right
-        if (isOdd) {
-            UI_GotoXY(x1, (y0 + y1) / 2);
+        }
+        for (int i = centerY + 1; i <= y1; i++) {
+            UI_GotoXY(x0, i);
             printf("%c", 186);
         }
-        /*for (int i = y0; i <= y1; i++) {
+        // Right
+        if (isOdd) {
+            UI_GotoXY(x1, centerY);
+            printf("%c", 186);
+        }
+        for (int i = centerY - 1; i >= y0; i--) {
             UI_GotoXY(x1, i);
             printf("%c", 186);
-        }*/
+        }
+        for (int i = centerY + 1; i <= y1; i++) {
+            UI_GotoXY(x1, i);
+            printf("%c", 186);
+        }
     }
 
     if (drawY) {
         isOdd = width % 2 == 1;
+        int centerX = (x0 + x1) / 2;
         // Up
         if (isOdd) {
-            UI_GotoXY((x0 + x1) / 2, y0);
+            UI_GotoXY(centerX, y0);
             printf("%c", 205);
         }
-        /*for (int i = x0; i <= x1; i++) {
+        for (int i = centerX - 1; i >= x0; i--) {
             UI_GotoXY(i, y0);
             printf("%c", 205);
-        }*/
-        // Down
-        if (isOdd) {
-            UI_GotoXY((x0 + x1) / 2, y1);
+        }
+        for (int i = centerX + 1; i <= x1; i++) {
+            UI_GotoXY(i, y0);
             printf("%c", 205);
         }
-        /*for (int i = x0; i <= x1; i++) {
+        // Down
+        if (isOdd) {
+            UI_GotoXY(centerX, y1);
+            printf("%c", 205);
+        }
+        for (int i = centerX - 1; i >= x0; i--) {
             UI_GotoXY(i, y1);
             printf("%c", 205);
-        }*/
+        }
+        for (int i = centerX + 1; i <= x1; i++) {
+            UI_GotoXY(i, y1);
+            printf("%c", 205);
+        }
     }
 
     if (drawX && drawY) {
