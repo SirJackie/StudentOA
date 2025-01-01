@@ -121,7 +121,7 @@ int main() {
 	Div div = {
 		1, 1, 78, 23,
 		true, true, 5, 5, 3, 3,
-		"A quick brown fox jumps over the lazy dog."
+		"A quick brown fox jumps over the lazy dog.", true
 	};
 	//UI_DrawDiv(div);
 

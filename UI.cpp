@@ -126,7 +126,7 @@ void UI_DrawRect_Animated(
 }
 
 void UI_PrintfWordWrap(
-    int x, int y, int maxWidth, int maxHeight, const char* str
+    int x, int y, int maxWidth, int maxHeight, const char* str, bool centered
 ) {
     int len = strlen(str);
     int lineCount = 0;
@@ -138,6 +138,11 @@ void UI_PrintfWordWrap(
             lineCount += 1;
         }
         else {
+            int this_len = strlen(str + i);
+            int padding = (maxWidth - this_len) / 2;
+            for (int j = 0; j < padding; j++) {
+                printf(" ");
+            }
             printf("%s\n", str + i);
             lineCount += 1;
         }
@@ -149,7 +154,8 @@ void UI_PrintfWordWrap(
 }
 
 void UI_PrintfWordWrap_Animated(
-    int x, int y, int maxWidth, int maxHeight, const char* str_raw, int frameCount
+    int x, int y, int maxWidth, int maxHeight, const char* str_raw, bool centered,
+    int frameCount
 ) {
     int len_raw = strlen(str_raw);
     char* str = new char[len_raw + (long long)1];
@@ -169,6 +175,11 @@ void UI_PrintfWordWrap_Animated(
             lineCount += 1;
         }
         else {
+            int this_len = strlen(str + i);
+            int padding = (maxWidth - this_len) / 2;
+            for (int j = 0; j < padding; j++) {
+                printf(" ");
+            }
             printf("%s\n", str + i);
             lineCount += 1;
         }
@@ -197,7 +208,9 @@ void UI_DrawDiv(Div& div) {
     int textY = borderY + 1 + div.paddingY;
     int textWidth = borderWidth - 2 * (1 + div.paddingX);    // 1 for BorderWidth
     int textHeight = borderHeight - 2 * (1 + div.paddingY);  // 1 for BorderHeight
-    UI_PrintfWordWrap(textX, textY, textWidth, textHeight, div.text);
+    UI_PrintfWordWrap(
+        textX, textY, textWidth, textHeight, div.text, div.text_centered
+    );
 }
 
 void UI_DrawDiv_Animated(Div& div, int frameCount) {
@@ -217,6 +230,7 @@ void UI_DrawDiv_Animated(Div& div, int frameCount) {
     int textWidth = borderWidth - 2 * (1 + div.paddingX);    // 1 for BorderWidth
     int textHeight = borderHeight - 2 * (1 + div.paddingY);  // 1 for BorderHeight
     UI_PrintfWordWrap_Animated(
-        textX, textY, textWidth, textHeight, div.text, frameCount
+        textX, textY, textWidth, textHeight, div.text, div.text_centered,
+        frameCount
     );
 }

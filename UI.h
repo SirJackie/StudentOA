@@ -20,6 +20,7 @@ struct Div {
 	int paddingY;
 
 	char text[1000] = { 0 };
+	bool text_centered;
 };
 
 void UI_Init();
