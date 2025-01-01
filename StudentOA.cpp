@@ -88,53 +88,60 @@ void UI_DrawStarterPage() {
 }
 
 #ifdef MODE_MAIN_OA
+//int main() {
+//	
+//	G_length = Load(G_students);
+//	UI_Init();
+//
+//	char option;
+//	bool wannaExit = false;
+//
+//	while (true) {
+//		system("cls");
+//		UI_DrawStarterPage();
+//		option = getchar();
+//		system("cls");
+//
+//		switch (option) {
+//		case 'd':
+//			Display();
+//			getchar();
+//			break;
+//		case 's':
+//			Search();
+//			getchar();
+//			break;
+//		case 'a':
+//			Append();
+//			getchar();
+//			break;
+//		case 'r':
+//			Reset();
+//			getchar();
+//			break;
+//		case 'x':
+//			printf("Exiting...\n");
+//			wannaExit = true;
+//			break;
+//		default:
+//			printf("Option NOT FOUND!\n");
+//			printf("--------------------------------\n");
+//			getchar();  // Flush Stdin
+//			getchar();
+//		}
+//
+//		if (wannaExit) {
+//			break;
+//		}
+//	}
+//
+//	return 0;
+//}
+
 int main() {
-	
-	G_length = Load(G_students);
 	UI_Init();
-
-	char option;
-	bool wannaExit = false;
-
-	while (true) {
-		system("cls");
-		UI_DrawStarterPage();
-		option = getchar();
-		system("cls");
-
-		switch (option) {
-		case 'd':
-			Display();
-			getchar();
-			break;
-		case 's':
-			Search();
-			getchar();
-			break;
-		case 'a':
-			Append();
-			getchar();
-			break;
-		case 'r':
-			Reset();
-			getchar();
-			break;
-		case 'x':
-			printf("Exiting...\n");
-			wannaExit = true;
-			break;
-		default:
-			printf("Option NOT FOUND!\n");
-			printf("--------------------------------\n");
-			getchar();  // Flush Stdin
-			getchar();
-		}
-
-		if (wannaExit) {
-			break;
-		}
-	}
-
+	UI_DrawRect(0, 0, 80, 25);
+	getchar();
 	return 0;
 }
 #endif
