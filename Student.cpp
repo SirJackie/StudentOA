@@ -509,23 +509,55 @@ void Append() {
  */
 
 void Reset() {
-	printf("Please Enter the Reset Information.\n");
+
+	Div divList[] = {
+		{   // Window Border
+			0, 0, WIN_WIDTH, WIN_HEIGHT,
+			true, true, 0, 0, 0, 0,
+			"", false
+		},
+		{
+			1, 2, 78, 3,
+			false, true, 3, 0, 0, 0,
+			"Reset", true
+		},
+		{
+			1, 6, 78, 5,
+			true, true, 3, 0, 1, 1,
+			"ID: ", false
+		},
+		{
+			1, 11, 78, 5,
+			true, true, 3, 0, 1, 1,
+			"Old Password: ", false
+		},
+		{
+			1, 16, 78, 5,
+			true, true, 3, 0, 1, 1,
+			"New Password: ", false
+		}
+	};
 
 	int id;
+	char idBuff[16] = { 0 };
 	char oldPwd[32] = { 0 };
 	char newPwd[32] = { 0 };
 
-	printf("ID: ");
-	scanf("%d", &id);
+	// Draw Reset UI
+	UI_Render(divList, sizeof(divList) / sizeof(Div));
 
-	printf("Old Password (<= 31 Chars): ");
-	SafeInput(oldPwd, 31);
+	// Response to User Input (Input: ID)
+	UI_InputAnimation(divList[2], idBuff, 16);
+	sscanf(idBuff, "%d", &id);
 
-	printf("New Password (<= 31 Chars): ");
-	SafeInput(newPwd, 31);
+	// Response to User Input (Input: Old Password)
+	UI_InputAnimation(divList[3], oldPwd, 32);
 
+	// Response to User Input (Input: New Password)
+	UI_InputAnimation(divList[4], newPwd, 32);
+
+	// Reset User's Password
 	bool successFlag = false;
-
 	for (int i = 0; i < G_length; i++) {
 		if (G_students[i].id == id && STR_EQUAL(G_students[i].pwd, oldPwd)) {
 			strcpy(G_students[i].pwd, newPwd);
@@ -533,17 +565,18 @@ void Reset() {
 		}
 	}
 
+	// Result Feedback
 	if (successFlag == true) {
-		printf("Reset Operation Succeed.\n");
+		// Update Database
 		Save(G_students, G_length);
-		printf("Data Saved to the Database.\n");
+
+		// Successful Message
+		UI_MessageBox("Reset Operation Succeeded! Data Saved to the Database.");
 	}
 	else {
-		printf("Reset Operation Failed.\n");
+		// Failed Message
+		UI_MessageBox("Reset Operation Failed! Wrong Old Password.");
 	}
-
-	getchar();  // Flush Stdin
-	printf("--------------------------------\n");
 }
 
 void ResetDatabase() {
